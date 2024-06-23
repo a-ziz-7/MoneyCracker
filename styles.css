@@ -55,21 +55,21 @@ h2 {
     display: flex;
     width: 100%;
     /* max-width: 1200px; */
-    margin-top: 80px;
+    margin-top: 4em;
     padding: 20px;
     box-sizing: border-box;
     justify-content: space-between;
 }
 
 .left {
-    width: 45%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 .right {
-    width: 45%;
+    width: 49.8%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -110,13 +110,34 @@ button:hover {
     border-color: #ff00cc;
 }
 
-#income-list, #expense-list {
-    display: flex;
+#expense-list {
+    display: block;
     flex-wrap: wrap;
     gap: 10px;
     width: 100%;
     justify-content: flex-start;
 }
+/* #income-list {
+    display: block;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    justify-content: flex-end;
+} */
+
+#income-list {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: flex-end; /* Align items to the bottom (right side in a column layout) */
+    gap: 0.5px; /* Space between items */
+    width: 100%; /* Full width of the container */
+}
+
+#income-list > div {
+    align-self: flex-end; /* Align each item to the right within the flex container */
+}
+
+
 
 .list-item {
     display: flex;
@@ -128,7 +149,8 @@ button:hover {
     border: 1px solid #00ffcc;
     color: #f0f0f0;
     border-radius: 5px;
-    width: 19.5em;
+    width: 19.5em; /* Full width by default */
+    /* margin-bottom: 10px; Space between items */
 }
 
 .right .list-item {

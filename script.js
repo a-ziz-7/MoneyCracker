@@ -28,13 +28,18 @@ function addExpense() {
     }
 }
 
+function setWidth(amount) {
+    return Math.min(150, Math.max(5, 155*(amount/85)));
+}
+
 function updateIncomeList() {
     const incomeList = document.getElementById('income-list');
     incomeList.innerHTML = '';
     incomes.forEach(income => {
         const item = document.createElement('div');
         item.classList.add('list-item');
-        item.innerHTML = `<span>${income.desc}</span><span>$${income.amount.toFixed(2)}</span>`;
+        item.innerHTML = (income.amount >= 10? `<span>${income.desc}</span>`:"")+`$${income.amount.toFixed(2)}</span>`;
+        item.style.height = setWidth(income.amount) + 'px';
         incomeList.appendChild(item);
     });
 }
@@ -45,7 +50,8 @@ function updateExpenseList() {
     expenses.forEach(expense => {
         const item = document.createElement('div');
         item.classList.add('list-item');
-        item.innerHTML = `<span>${expense.desc}</span><span>$${expense.amount.toFixed(2)}</span>`;
+        item.innerHTML = (expense.amount >= 10? `<span>${expense.desc}</span>`:"")+`<span>$${expense.amount.toFixed(2)}</span>`;
+        item.style.height = setWidth(expense.amount) + 'px';
         expenseList.appendChild(item);
     });
 }
