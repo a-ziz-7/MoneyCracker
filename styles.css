@@ -1,0 +1,136 @@
+/* styles.css */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    /* max-width: 1200px; */
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    background-color: #1e1e1e;
+    padding: 10px 0;
+}
+
+h2 {
+    width: 25%;
+    text-align: center;
+    margin: 0;
+    padding: 10px 0;
+}
+
+#income-header {
+    color: #00ffcc;
+    border-bottom: 2px solid #00ffcc;
+}
+
+#expense-header {
+    color: #ff00cc;
+    border-bottom: 2px solid #ff00cc;
+}
+
+.balance {
+    width: 150px;
+    padding: 5px;
+    background-color: #1e1e1e;
+    border: 2px solid #00ffcc;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    color: #00ffcc;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    /* max-width: 1200px; */
+    margin-top: 80px;
+    padding: 20px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.left {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.right {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+input, button {
+    width: 25em;
+    height: 3em;
+    padding: 5px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+input {
+    background-color: #2a2a2a;
+    border: 1px solid #00ffcc;
+    color: #f0f0f0;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+button {
+    background-color: #00ffcc;
+    color: #121212;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #00ccb3;
+}
+
+.right input, .right button {
+    border-color: #ff00cc;
+}
+
+#income-list, #expense-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border: 1px solid #00ffcc;
+    color: #f0f0f0;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.right .list-item {
+    border-color: #ff00cc;
+}
