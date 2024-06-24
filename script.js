@@ -1,5 +1,6 @@
 // zoom in and out functions (buttons)
-// categories for income and expensec
+// categories for income and expenses
+// should chage color of the div box
 
 let incomes = [];
 let expenses = [];
