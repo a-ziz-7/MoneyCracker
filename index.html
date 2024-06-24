@@ -16,12 +16,26 @@
         <div class="left">
             <input type="text" id="income-desc" placeholder="Description">
             <input type="number" id="income-amount" placeholder="Amount">
+            <div class="selectable-input-divs">
+                <div class="selectable-option" id="income_1" data-value="salary">Salary</div>
+                <div class="selectable-option" id="income_2" data-value="business">Business</div>
+                <div class="selectable-option" id="income_3" data-value="gift">Gift</div>
+                <div class="selectable-option" id="income_4" data-value="interest">Interest</div>
+                <div class="selectable-option" id="income_5" data-value="other">Other</div>
+            </div>
             <button onclick="addIncome()">Add Income</button>
             <div id="income-list"></div>
         </div>
         <div class="right">
             <input type="text" id="expense-desc" placeholder="Description">
             <input type="number" id="expense-amount" placeholder="Amount">
+            <div class="selectable-output-divs">
+                <div class="selectable-option" id="output_1" data-value="salary">Salary</div>
+                <div class="selectable-option" id="output_2" data-value="business">Business</div>
+                <div class="selectable-option" id="output_3" data-value="gift">Gift</div>
+                <div class="selectable-option" id="output_4" data-value="interest">Interest</div>
+                <div class="selectable-option" id="output_5" data-value="other">Other</div>
+            </div>
             <button id="expense" onclick="addExpense()">Add Expense</button>
             <div id="expense-list"></div>
         </div>

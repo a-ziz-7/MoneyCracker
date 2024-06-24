@@ -125,6 +125,7 @@ function handleContextAction(action) {
         alert(`INFO:\nTime: ${item.time}\nDescription: ${item.desc}\nAmount: $${item.amount.toFixed(2)}`);
     } else if (action === 'edit') {
         const newDesc = prompt('Enter new description:', contextMenuItem.innerText.split(' - ')[0]);
+        if (!newDesc) return;
         const newAmount = prompt('Enter new amount:', contextMenuItem.innerText.split(' - $')[1]);
 
         if (newDesc && newAmount && !isNaN(newAmount)) {
