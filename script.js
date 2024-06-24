@@ -29,7 +29,7 @@ function addExpense() {
 }
 
 function setWidth(amount) {
-    return Math.min(150, Math.max(5, 155*(amount/85)));
+    return Math.max(5, 200*(amount/80));
 }
 
 function updateIncomeList() {
