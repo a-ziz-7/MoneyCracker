@@ -1,4 +1,6 @@
-// script.js
+// zoom in and out functions (buttons)
+// categories for income and expensec
+
 let incomes = [];
 let expenses = [];
 
@@ -29,7 +31,7 @@ function addExpense() {
 }
 
 function setWidth(amount) {
-    return Math.max(5, 155*(amount*1.0/85));
+    return Math.min(500, Math.max(5, 155*(amount*1.0/85)));
 }
 
 function updateIncomeList() {
@@ -61,4 +63,12 @@ function updateBalance() {
     const totalExpense = expenses.reduce((sum, expense) => sum + expense.amount, 0);
     const balance = totalIncome - totalExpense;
     document.getElementById('balance').textContent = `$${balance.toFixed(2)}`;
+    if (balance < 0) {
+        document.getElementById('balance').style.color =  "#ff000d";
+        document.getElementById('balance').style.borderColor =  "#ff000d";
+    }else{
+        // #39ff14
+        document.getElementById('balance').style.color =  "#39ff14";
+        document.getElementById('balance').style.borderColor =  "#39ff14";
+    }
 }

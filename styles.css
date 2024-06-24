@@ -44,11 +44,11 @@ h2 {
     width: 150px;
     padding: 5px;
     background-color: #1e1e1e;
-    border: 2px solid #00ffcc;
+    border: 2px solid #39ff14;
     text-align: center;
     font-weight: bold;
     border-radius: 5px;
-    color: #00ffcc;
+    color: #39ff14;
 }
 
 .container {
@@ -113,7 +113,6 @@ button:hover {
 #expense-list {
     display: block;
     flex-wrap: wrap;
-    gap: 10px;
     width: 100%;
     justify-content: flex-start;
 }
@@ -129,7 +128,7 @@ button:hover {
     display: flex; /* Use flexbox for layout */
     flex-direction: column; /* Stack items vertically */
     justify-content: flex-end; /* Align items to the bottom (right side in a column layout) */
-    gap: 0.5px; /* Space between items */
+    /* gap: 0.5px; */
     width: 100%; /* Full width of the container */
 }
 
