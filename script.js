@@ -70,7 +70,7 @@ function updateIncomeList() {
         item.addEventListener('contextmenu', function(event) {
             showContextMenu(event, item);
         });
-        incomeList.appendChild(item);
+        incomeList.prepend(item);
     });
     updateBalance();
 }
@@ -92,7 +92,7 @@ function updateExpenseList() {
         item.addEventListener('contextmenu', function(event) {
             showContextMenu(event, item);
         });
-        expenseList.appendChild(item);
+        expenseList.prepend(item);
     });
     updateBalance();
 }

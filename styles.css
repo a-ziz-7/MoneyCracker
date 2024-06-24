@@ -12,9 +12,9 @@ body {
 
 .header-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    width: 90%;
+    width: 100%;
     /* max-width: 1200px; */
     /* position: fixed; */
     top: 0;
@@ -22,6 +22,20 @@ body {
     background-color: #1e1e1e;
     padding: 10px 0;
 }
+
+@media (max-width: 768px) {
+    .header-container {
+        height: 1.3rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+    #balance {
+        font-size: 1rem;
+    }
+}
+
 
 h2 {
     width: 20%;
@@ -94,7 +108,7 @@ input, button {
 @media (max-width: 768px) {
     input, button {
         width: 90%;
-        height: auto;
+        /* height: auto; */
         max-width: 22.5rem;
     }
 
@@ -164,7 +178,6 @@ button:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
     background-color: #2a2a2a;
     border: 1px solid #00ffcc;
     color: #f0f0f0;
@@ -172,6 +185,13 @@ button:hover {
     width: 19.5em; /* Full width by default */
     /* margin-bottom: 10px; Space between items */
 }
+
+@media (max-width: 768px) {
+    .list-item {
+        width: 100%;
+    }
+}
+
 
 .right .list-item {
     border-color: #ff00cc;
@@ -231,7 +251,7 @@ button:hover {
     border: 1px solid #00ffcc;
     cursor: pointer;
     box-sizing: border-box;
-    color: #121212;
+    /* color: #121212; */
     text-align: center;
 }
 
@@ -244,6 +264,30 @@ button:hover {
     margin-left: auto; /* Pushes it to the right edge */
     margin-right: auto; /* Pushes it to the left edge */
 }
+
+#income_1, #income_2, #income_3, #income_4, #income_5, #expense_1, #expense_2, #expense_3, #expense_4, #expense_5 {
+    background-color: #333;
+}
+
+/* #income_1, #expense_4 {
+    background-color: #bbbb00;
+}
+
+#income_2, #expense_3 {
+    background-color: #800000; 
+}
+
+#income_3, #expense_2 {
+    background-color: #1f7a00;
+}
+
+#income_4, #expense_1 {
+    background-color: #e68a00;
+} 
+
+/* #income_5, #expense_1 {
+    background-color: #d97b00;
+} */
 
 @media (max-width: 768px) {
     .selectable-option {
