@@ -3,6 +3,7 @@
 let incomes = [];
 let expenses = [];
 let contextMenuItem = null;
+let resize = [0];
 
 document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
@@ -49,7 +50,8 @@ function addExpense() {
 }
 
 function setHeight(amount) {
-    return Math.min(1000, Math.max(5, 155*(amount*1.0/85)));
+    console.log(resize)
+    return Math.min(1000, Math.max(5, (155-(resize[0]*15))*(amount*1.0/85)));
 }
 
 function updateIncomeList() {
@@ -95,6 +97,18 @@ function updateExpenseList() {
         expenseList.prepend(item);
     });
     updateBalance();
+}
+
+function resizeDown() {
+    resize[0] += 1;
+    updateIncomeList();
+    updateExpenseList();
+}
+
+function resizeUp() {
+    resize[0] -= 1;
+    updateIncomeList();
+    updateExpenseList();
 }
 
 function showContextMenu(event, item) {
@@ -151,7 +165,7 @@ function updateBalance() {
     const totalExpense = expenses.reduce((sum, expense) => sum + expense.amount, 0);
     const balance = totalIncome - totalExpense;
     document.getElementById('balance').innerText = `$${balance.toFixed(2)}`;
-    if (balance < 0) {
+    if (balance <= 0) {
         document.getElementById('balance').style.color =  "#ff000d";
         document.getElementById('balance').style.borderColor =  "#ff000d";
     }else{

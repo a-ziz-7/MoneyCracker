@@ -182,8 +182,7 @@ button:hover {
     border: 1px solid #00ffcc;
     color: #f0f0f0;
     border-radius: 5px;
-    width: 19.5em; /* Full width by default */
-    /* margin-bottom: 10px; Space between items */
+    width: 19.5em; 
 }
 
 @media (max-width: 768px) {
@@ -298,4 +297,8 @@ button:hover {
     .selectable-option:last-child {
         width: 70%;
     }
+}
+
+#rezise_down {
+    background-color: #ff00cc;
 }
