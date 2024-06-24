@@ -31,7 +31,7 @@ function addExpense() {
     }
 }
 
-function setWidth(amount) {
+function setHeight(amount) {
     return Math.min(500, Math.max(5, 155*(amount*1.0/85)));
 }
 
@@ -41,8 +41,13 @@ function updateIncomeList() {
     incomes.forEach(income => {
         const item = document.createElement('div');
         item.classList.add('list-item');
-        item.innerHTML = (income.amount >= 10? `<span>${income.desc}</span>`:"")+`$${income.amount.toFixed(2)}</span>`;
-        item.style.height = setWidth(income.amount) + 'px';
+        if (income.amount >= 20) {
+            item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
+        } else {
+            item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
+        }
+        
+        item.style.height = setHeight(income.amount) + 'px';
         incomeList.appendChild(item);
     });
 }
@@ -53,8 +58,12 @@ function updateExpenseList() {
     expenses.forEach(expense => {
         const item = document.createElement('div');
         item.classList.add('list-item');
-        item.innerHTML = (expense.amount >= 10? `<span>${expense.desc}</span>`:"")+`<span>$${expense.amount.toFixed(2)}</span>`;
-        item.style.height = setWidth(expense.amount) + 'px';
+        if (expense.amount >= 20) {
+            item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
+        } else {
+            item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
+        }
+        item.style.height = setHeight(expense.amount) + 'px';
         expenseList.appendChild(item);
     });
 }
