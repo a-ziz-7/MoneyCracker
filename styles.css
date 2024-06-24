@@ -102,8 +102,16 @@ button {
     font-weight: bold;
 }
 
+#expense {
+    background-color: #ff00cc;
+}
+
 button:hover {
     background-color: #00ccb3;
+}
+
+#expense:hover {
+    background-color: #cd03a5;
 }
 
 .right input, .right button {
@@ -154,4 +162,54 @@ button:hover {
 
 .right .list-item {
     border-color: #ff00cc;
+}
+
+
+.list-item .delete-button {
+    display: none;
+    position: absolute;
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.list-item.show-delete .delete-button {
+    display: block;
+}
+
+.context-menu {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    border: 1px solid #00ffcc;
+    border-radius: 5px;
+    width: 10%;
+    z-index: 1000;
+    padding: 5px;
+    color: #f0f0f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.context-menu button {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    background: none;
+    border: none;
+    color: #f0f0f0;
+    text-align: left;
+    cursor: pointer;
+    border-bottom: 1px solid #00ffcc; /* Add this line for separation */
+}
+
+/* .context-menu button:last-child {
+    border-bottom: none; /* Remove the border from the last button 
+} */
+
+
+.context-menu button:hover {
+    background-color: #555;
 }
