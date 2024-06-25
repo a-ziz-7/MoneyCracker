@@ -5,6 +5,22 @@ let expenses = [];
 let contextMenuItem = null;
 let resize = [0];
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Load income and expenses from localStorage
+    const storedIncomes = localStorage.getItem('incomes');
+    const storedExpenses = localStorage.getItem('expenses');
+
+    // Parse stored data if available
+    if (storedIncomes) {
+        incomes = JSON.parse(storedIncomes);
+        updateIncomeList();
+    }
+    if (storedExpenses) {
+        expenses = JSON.parse(storedExpenses);
+        updateExpenseList();
+    }
+});
+
 document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
 }, false);
@@ -15,6 +31,11 @@ document.addEventListener('click', function(event) {
         contextMenu.style.display = 'none';
     }
 }, false);
+
+function saveData() {
+    localStorage.setItem('incomes', JSON.stringify(incomes));
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+}
 
 function addIncome() {
     const desc = document.getElementById('income-desc').value;
@@ -28,9 +49,10 @@ function addIncome() {
         incomes.push(income);
         console.log(incomes)
         // fix it later
-        // document.getElementById('income-desc').value = '';
+        document.getElementById('income-desc').value = '';
         document.getElementById('income-amount').value = '';
         updateIncomeList();
+        localStorage.setItem('incomes', JSON.stringify(incomes));
     }
 }
 
@@ -43,9 +65,10 @@ function addExpense() {
         let formattedTime = `${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')}/${now.getFullYear()} ${now.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`;
         const expense = { id: Date.now(), time: formattedTime, desc, amount: parseFloat(amount) };
         expenses.push(expense);
-        // document.getElementById('expense-desc').value = '';
+        document.getElementById('expense-desc').value = '';
         document.getElementById('expense-amount').value = '';
         updateExpenseList();
+        localStorage.setItem('expenses', JSON.stringify(expenses));
     }
 }
 
@@ -130,9 +153,11 @@ function handleContextAction(action) {
         if (type === 'income') {
             incomes = incomes.filter(income => income.id !== id);
             updateIncomeList();
+            saveData();
         } else if (type === 'expense') {
             expenses = expenses.filter(expense => expense.id !== id);
             updateExpenseList();
+            saveData();
         }
     } else if (action === 'info') {
         const item = type === 'income' ? incomes.find(income => income.id === id) : expenses.find(expense => expense.id === id);
@@ -155,6 +180,7 @@ function handleContextAction(action) {
                 updateExpenseList();
             }
             updateBalance();
+            saveData();
         }
     }
     document.getElementById('context-menu').style.display = 'none';
