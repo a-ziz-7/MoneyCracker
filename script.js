@@ -5,6 +5,7 @@ let expenses = [];
 let contextMenuItem = null;
 let resize = [0];
 
+// localStorage.clear();
 document.addEventListener('DOMContentLoaded', function() {
     // Load income and expenses from localStorage
     const storedIncomes = localStorage.getItem('incomes');
@@ -32,6 +33,32 @@ document.addEventListener('click', function(event) {
     }
 }, false);
 
+
+let touchStartTime = 0;
+const touchDuration = 400; 
+
+document.addEventListener('touchstart', function(event) {
+    console.log(event.target.classList)
+    if (event.target.classList.contains('list-item')) {
+        touchStartTime = Date.now();
+    }
+}, false);
+
+document.addEventListener('touchend', function(event) {
+    const touchEndTime = Date.now();
+    // alert(touchStartTime)
+    if (touchEndTime - touchStartTime > touchDuration && event.target.classList.contains('list-item')) {
+        // Show context menu for long press
+        const contextMenu = document.getElementById('context-menu');
+        contextMenu.style.display = 'block';
+        contextMenu.style.left = `${event.pageX}px`;
+        contextMenu.style.top = `${event.pageY}px`;
+        contextMenuItem = event.target;
+        event.preventDefault();
+    }
+    touchStartTime = 0;
+}, false);
+
 function saveData() {
     localStorage.setItem('incomes', JSON.stringify(incomes));
     localStorage.setItem('expenses', JSON.stringify(expenses));
@@ -47,8 +74,7 @@ function addIncome() {
 
         const income = { id: Date.now(), time: formattedTime, desc, amount: parseFloat(amount) };
         incomes.push(income);
-        console.log(incomes)
-        // fix it later
+        // console.log(incomes);
         document.getElementById('income-desc').value = '';
         document.getElementById('income-amount').value = '';
         updateIncomeList();
@@ -73,7 +99,6 @@ function addExpense() {
 }
 
 function setHeight(amount) {
-    console.log(resize)
     return Math.min(1000, Math.max(5, (155-(resize[0]*15))*(amount*1.0/85)));
 }
 
@@ -88,6 +113,7 @@ function updateIncomeList() {
         if (income.amount >= 20) {
             item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
         } else {
+            // console.log(income.amount)
             item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
         }
         
@@ -144,10 +170,12 @@ function showContextMenu(event, item) {
 }
 
 function handleContextAction(action) {
-    if (!contextMenuItem) return;
-
+    // if (!contextMenuItem) return;
+    // alert(action);  
+    alert(contextMenuItem);
     const id = parseInt(contextMenuItem.dataset.id);
     const type = contextMenuItem.dataset.type;
+    alert(type);
 
     if (action === 'delete') {
         if (type === 'income') {
@@ -163,20 +191,21 @@ function handleContextAction(action) {
         const item = type === 'income' ? incomes.find(income => income.id === id) : expenses.find(expense => expense.id === id);
         alert(`INFO:\nTime: ${item.time}\nDescription: ${item.desc}\nAmount: $${item.amount.toFixed(2)}`);
     } else if (action === 'edit') {
-        const newDesc = prompt('Enter new description:', contextMenuItem.innerText.split(' - ')[0]);
+        const item = type === 'income' ? incomes.find(income => income.id === id) : expenses.find(expense => expense.id === id);
+        const newDesc = prompt('Enter new description:', item.desc);
         if (!newDesc) return;
-        const newAmount = prompt('Enter new amount:', contextMenuItem.innerText.split(' - $')[1]);
-
-        if (newDesc && newAmount && !isNaN(newAmount)) {
+        const newAmount = prompt('Enter new amount:', item.amount);
+        // console.log(newDesc, newAmount, newDesc && !isNaN(newAmount));
+        if ((newDesc && !isNaN(newAmount)) || newAmount==null) {
             if (type === 'income') {
                 const income = incomes.find(income => income.id === id);
                 income.desc = newDesc;
-                income.amount = parseFloat(newAmount);
+                income.amount = newAmount ? parseFloat(newAmount) : income.amount;
                 updateIncomeList();
             } else if (type === 'expense') {
                 const expense = expenses.find(expense => expense.id === id);
                 expense.desc = newDesc;
-                expense.amount = parseFloat(newAmount);
+                expense.amount = newAmount ? parseFloat(newAmount) : expense.amount;
                 updateExpenseList();
             }
             updateBalance();
