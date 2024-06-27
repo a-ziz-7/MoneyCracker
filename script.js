@@ -172,10 +172,10 @@ function showContextMenu(event, item) {
 function handleContextAction(action) {
     // if (!contextMenuItem) return;
     // alert(action);  
-    alert(contextMenuItem);
+    // alert(contextMenuItem);
     const id = parseInt(contextMenuItem.dataset.id);
     const type = contextMenuItem.dataset.type;
-    alert(type);
+    // alert(type);
 
     if (action === 'delete') {
         if (type === 'income') {
