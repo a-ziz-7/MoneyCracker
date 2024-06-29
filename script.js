@@ -165,7 +165,7 @@ function showContextMenu(event, item) {
     const contextMenu = document.getElementById('context-menu');
     contextMenu.style.display = 'block';
     contextMenu.style.left = `${event.pageX}px`;
-    contextMenu.style.top = `${event.pageY}px`;
+    contextMenu.style.top = `${event.pageY-50}px`;
     contextMenuItem = item;
 }
 
