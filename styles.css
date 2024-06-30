@@ -182,7 +182,9 @@ button:hover {
     border: 1px solid #00ffcc;
     color: #f0f0f0;
     border-radius: 5px;
-    width: 19.5em; 
+    /* width: 19.5em;  */
+    /* width: 45%; */
+    width: 22pc;
 }
 
 @media (max-width: 768px) {

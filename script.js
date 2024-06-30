@@ -110,14 +110,22 @@ function updateIncomeList() {
         item.classList.add('list-item');
         item.dataset.id = income.id;
         item.dataset.type = 'income';
-        if (income.amount >= 20) {
+
+        const height = setHeight(income.amount);
+
+        if (height > 35) {
             item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
         } else {
             // console.log(income.amount)
             item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
         }
         
-        item.style.height = setHeight(income.amount) + 'px';
+        item.style.height = height + 'px';
+        if (height < 15) {
+            console.log(item.style.height);
+            item.style.fontSize = (item.style.height);
+        }
+
         item.addEventListener('contextmenu', function(event) {
             showContextMenu(event, item);
         });
@@ -134,12 +142,21 @@ function updateExpenseList() {
         item.classList.add('list-item');
         item.dataset.id = expense.id;
         item.dataset.type = 'expense';
-        if (expense.amount >= 20) {
+
+        const height = setHeight(expense.amount);
+
+        // expense.amount >= 20 && height > 35
+        if (height > 35) {
             item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
         } else {
             item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
         }
-        item.style.height = setHeight(expense.amount) + 'px';
+        
+        item.style.height = height + 'px';
+        if (height < 15) {
+            console.log(item.style.height);
+            item.style.fontSize = (item.style.height);
+        }
         item.addEventListener('contextmenu', function(event) {
             showContextMenu(event, item);
         });
