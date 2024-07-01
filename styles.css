@@ -301,6 +301,9 @@ button:hover {
     }
 }
 
-#rezise_down {
+#resize_up, #resize_down {
+}
+
+#resize_down {
     background-color: #ff00cc;
 }

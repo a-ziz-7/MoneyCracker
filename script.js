@@ -116,8 +116,12 @@ function updateIncomeList() {
         if (height > 35) {
             item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
         } else {
-            // console.log(income.amount)
-            item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
+            // console.log(income.desc.length);
+            if (income.desc.length < 10 && height > 20) {
+                item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
+            } else {
+                item.innerHTML = `<span>$${income.amount.toFixed(2)}</span>`;
+            }
         }
         
         item.style.height = height + 'px';
@@ -125,7 +129,7 @@ function updateIncomeList() {
             console.log(item.style.height);
             item.style.fontSize = (item.style.height);
         }
-
+        
         item.addEventListener('contextmenu', function(event) {
             showContextMenu(event, item);
         });
@@ -149,9 +153,12 @@ function updateExpenseList() {
         if (height > 35) {
             item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
         } else {
-            item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
+            if (expense.desc.length < 10 && height > 20) {
+                item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
+            } else {
+                item.innerHTML = `<span>$${expense.amount.toFixed(2)}</span>`;
+            }
         }
-        
         item.style.height = height + 'px';
         if (height < 15) {
             console.log(item.style.height);
