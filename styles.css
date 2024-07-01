@@ -300,9 +300,10 @@ button:hover {
         width: 70%;
     }
 }
-
+/* 
 #resize_up, #resize_down {
-}
+    
+} */
 
 #resize_down {
     background-color: #ff00cc;
