@@ -23,6 +23,26 @@ let typeColors = {
 };
 
 
+function ensureAllProperties(array) {
+    const defaultValues = {
+        type: 'other',
+        hide: false,
+        resize: 0
+    };
+
+    array.forEach(item => {
+        for (const key in defaultValues) {
+            if (!item.hasOwnProperty(key)) {
+                item[key] = defaultValues[key];
+            }
+        }
+    });
+    
+    return array;
+}
+
+
+
 // localStorage.clear();
 document.addEventListener('DOMContentLoaded', function() {
     // Load income and expenses from localStorage
@@ -31,15 +51,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Parse stored data if available
     if (storedIncomes) {
         incomes = JSON.parse(storedIncomes);
-        console.log(incomes);
+        incomes = ensureAllProperties(incomes);
         updateIncomeList();
     }
     if (storedExpenses) {
         expenses = JSON.parse(storedExpenses);
-        console.log(expenses);
+        expenses = ensureAllProperties(expenses);
         updateExpenseList();
     }
+    console.log(incomes);
+    console.log(expenses);
 });
+
 
 document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
@@ -435,27 +458,3 @@ document.getElementById('overlay').addEventListener('click', function() {
     document.getElementById('popup2').style.display = 'none';
     document.getElementById('overlay').style.display = 'none';
 });
-
-function ensureAllProperties(array) {
-    const defaultValues = {
-        type: 'other',
-        hide: false,
-        resize: 0
-    };
-
-    array.forEach(item => {
-        for (const key in defaultValues) {
-            if (!item.hasOwnProperty(key)) {
-                item[key] = defaultValues[key];
-            }
-        }
-    });
-
-    return array;
-}
-
-incomes = ensureAllProperties(incomes);
-expenses = ensureAllProperties(expenses);
-
-console.log(incomes);
-console.log(expenses);
