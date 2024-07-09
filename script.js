@@ -31,10 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Parse stored data if available
     if (storedIncomes) {
         incomes = JSON.parse(storedIncomes);
+        console.log(incomes);
         updateIncomeList();
     }
     if (storedExpenses) {
         expenses = JSON.parse(storedExpenses);
+        console.log(expenses);
         updateExpenseList();
     }
 });
@@ -452,5 +454,8 @@ function ensureAllProperties(array) {
     return array;
 }
 
-ensureAllProperties(incomes);
-ensureAllProperties(expenses);
+incomes = ensureAllProperties(incomes);
+expenses = ensureAllProperties(expenses);
+
+console.log(incomes);
+console.log(expenses);
