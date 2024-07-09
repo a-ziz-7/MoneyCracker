@@ -10,36 +10,31 @@
 <body>
     <div class="header-container">
         <h2 id="income-header">Income</h2>
+        <div class="menu" id="in-menu">menu</div>
         <div class="balance" id="balance">$0.00</div>
+        <div class="menu" id="ex-menu">menu</div>
         <h2 id="expense-header">Expenses</h2>
     </div>
     <div class="container">
         <div class="left">
             <input type="text" id="income-desc" placeholder="Description">
             <input type="number" id="income-amount" placeholder="Amount">
-            <!-- <div class="selectable-input-divs">
-                <div class="selectable-option" id="income_1" data-value="salary">Salary</div>
-                <div class="selectable-option" id="income_2" data-value="gift">Gift</div>
-                <div class="selectable-option" id="income_3" data-value="business">Business</div>
-                <div class="selectable-option" id="income_4" data-value="interest">Interest</div>
-                <div class="selectable-option" id="income_5" data-value="other">Other</div>
-            </div> -->
+            <div class="half_buttons">
+                <button id="opincome" onclick="handleOPIncome()">Options</button>
+                <button id="resize_down" onclick="resizeDown()">Resize -</button>
+            </div>
             <button onclick="addIncome()">Add Income</button>
-            <button id="resize_down" onclick="resizeDown()">Resize -</button>
             <div id="income-list"></div>
         </div>
         <div class="right">
             <input type="text" id="expense-desc" placeholder="Description">
             <input type="number" id="expense-amount" placeholder="Amount">
-            <!-- <div class="selectable-output-divs">
-                <div class="selectable-option" id="expense_1" data-value="food">Food</div>
-                <div class="selectable-option" id="expense_2" data-value="fun">Going Out</div>
-                <div class="selectable-option" id="expense_3" data-value="groceries">Groceries</div>
-                <div class="selectable-option" id="expense_4" data-value="shopping">Shopping</div>
-                <div class="selectable-option" id="expense_5" data-value="other">Other</div>
-            </div> -->
+            <div class="half_buttons">
+                <button id="opexpense" onclick="handleOPExpense()">Options</button>
+                <button id="resize_up" onclick="resizeUp()">Resize +</button>
+            </div>
             <button id="expense" onclick="addExpense()">Add Expense</button>
-            <button id="resize_up" onclick="resizeUp()">Resize +</button>
+            
             <div id="expense-list"></div>
         </div>
     </div>
@@ -47,6 +42,30 @@
         <button onclick="handleContextAction('info')" ontouchend="handleContextAction('info')">Info</button>
         <button onclick="handleContextAction('edit')" ontouchend="handleContextAction('edit')">Edit</button>
         <button onclick="handleContextAction('delete')" ontouchend="handleContextAction('delete')">Delete</button>
+        <button onclick="handleContextAction('hide')" ontouchend="handleContextAction('hide')">Hide</button>
+        <button onclick="handleContextAction('resizesmall')" ontouchend="handleContextAction('resizesmall')">Resize small</button>
+        <button onclick="handleContextAction('resizebig')" ontouchend="handleContextAction('resizebig')">Resize big</button>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <div class="selectable-input-divs">
+            <div class="selectable-option" id="income_1" data-value="salary">Salary</div>
+            <div class="selectable-option" id="income_2" data-value="gift">Gift</div>
+            <div class="selectable-option" id="income_3" data-value="business">Business</div>
+            <div class="selectable-option" id="income_4" data-value="interest">Interest</div>
+            <div class="selectable-option" id="income_5" data-value="custom">Custom</div>
+            <div class="selectable-option" id="income_6" data-value="other">Other</div>
+        </div>
+    </div>
+    <div class="popup" id="popup2">
+        <div class="selectable-output-divs">
+            <div class="selectable-option" id="expense_1" data-value="food">Food</div>
+            <div class="selectable-option" id="expense_2" data-value="fun">Going Out</div>
+            <div class="selectable-option" id="expense_3" data-value="groceries">Groceries</div>
+            <div class="selectable-option" id="expense_4" data-value="shopping">Shopping</div>
+            <div class="selectable-option" id="expense_5" data-value="transport">Transport</div>
+            <div class="selectable-option" id="expense_6" data-value="other">Other</div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

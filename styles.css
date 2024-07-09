@@ -33,6 +33,7 @@ body {
     }
     #balance {
         font-size: 1rem;
+        width: 90px;
     }
 }
 
@@ -105,16 +106,36 @@ input, button {
     justify-content: space-between;
     
 }
+
+.half_buttons {
+    width: 22.5rem;
+    justify-content: space-around;
+    box-sizing: border-box;
+    /* color: #121212; */
+    text-align: center;
+}
+
+#resize_down, #opincome, #resize_up, #opexpense {
+    width: calc(50% - 5px);
+}
+
 @media (max-width: 768px) {
     input, button {
         width: 90%;
-        /* height: auto; */
         max-width: 22.5rem;
     }
 
     .selectable-input-divs, .selectable-output-divs {
         width: 90%;
         max-width: 22.5rem;
+    }
+    .half_buttons {
+        width: 90%;
+        max-width: 22.5rem;
+    }
+
+    #resize_down, #opincome, #resize_up, #opexpense {
+        width: calc(50% - 5px);
     }
 }
 
@@ -136,7 +157,7 @@ button {
     font-weight: bold;
 }
 
-#expense {
+#expense, #opexpense, #resize_down {
     background-color: #ff00cc;
 }
 
@@ -144,13 +165,14 @@ button:hover {
     background-color: #00ccb3;
 }
 
-#expense:hover {
+#expense:hover, #opexpense:hover, #resize_down:hover{
     background-color: #cd03a5;
 }
 
 .right input, .right button {
     border-color: #ff00cc;
 }
+
 
 #expense-list {
     display: block;
@@ -174,6 +196,7 @@ button:hover {
 
 
 .list-item {
+    position: relative; /* Add this to position the ::after pseudo-element correctly */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -182,10 +205,23 @@ button:hover {
     border: 1px solid #00ffcc;
     color: #f0f0f0;
     border-radius: 5px;
-    /* width: 19.5em;  */
-    /* width: 45%; */
-    width: 22pc;
+    width: 22pc; /* Adjust as needed */
+    overflow: hidden; /* Ensures the pseudo-elements stay within the boundaries */
+    --triangle-color: #2a2a2a; /* Default color */
 }
+
+.list-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background-color: var(--triangle-color);
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+}
+
+
 
 @media (max-width: 768px) {
     .list-item {
@@ -243,11 +279,37 @@ button:hover {
     background-color: #555;
 }
 
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ff4d00;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+}
+
 .selectable-option {
-    width: calc(50% - 5px); /* Two items per row with spacing */
+    width: calc(33% - 5px); /* Two items per row with spacing */
+    color: black;
     padding: 10px;
     margin-bottom: 5px;
-    background-color: #f0f0f0;
+    background-color: #333;
     border-radius: 5px;
     border: 1px solid #00ffcc;
     cursor: pointer;
@@ -256,43 +318,41 @@ button:hover {
     text-align: center;
 }
 
-.selectable-output-divs .selectable-option {
-    border: 1px solid #ff00cc;
+.selectable-option:last-child {
+    color: white;
 }
 
-.selectable-option:nth-child(5) {
-    width: calc(50% - 5px); /* Two items per row with spacing */
-    margin-left: auto; /* Pushes it to the right edge */
-    margin-right: auto; /* Pushes it to the left edge */
+.selectable-output-divs .selectable-option {
+    border: 1px solid #ff00cc;
 }
 
 #income_1, #income_2, #income_3, #income_4, #income_5, #expense_1, #expense_2, #expense_3, #expense_4, #expense_5 {
     background-color: #333;
 }
 
-/* #income_1, #expense_4 {
-    background-color: #bbbb00;
+ #income_1, #expense_2 {
+    background-color: #00b3ff;
 }
 
 #income_2, #expense_3 {
-    background-color: #800000; 
+    background-color: #00ff15;
 }
 
-#income_3, #expense_2 {
-    background-color: #1f7a00;
+#income_3, #expense_5 {
+    background-color: #cc00ff;
 }
 
 #income_4, #expense_1 {
-    background-color: #e68a00;
-} */
+    background-color: #ffff00;
+}
 
-/* #income_5, #expense_1 {
-    background-color: #d97b00;
-} */
+#income_5, #expense_4 {
+    background-color: #ff9900;
+}
 
 @media (max-width: 768px) {
     .selectable-option {
-        width: 70%;  /*calc(50% + 5px); /* Two items per row with spacing */
+        width: 70%; 
         margin-left: auto; /* Center items */
         margin-right: auto; /* Center items */
     }
@@ -300,10 +360,6 @@ button:hover {
         width: 70%;
     }
 }
-/* 
-#resize_up, #resize_down {
-    
-} */
 
 #resize_down {
     background-color: #ff00cc;
