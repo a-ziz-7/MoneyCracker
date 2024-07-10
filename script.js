@@ -347,39 +347,48 @@ function updateBalance() {
 let timeoutId1;
 let timeoutId2;
 
-document.getElementById("income-header").addEventListener('mouseenter', function(event) {
+const incomeHeader = document.getElementById("income-header");
+const expenseHeader = document.getElementById("expense-header");
+
+incomeHeader.addEventListener('mouseenter', function(event) {
     clearTimeout(timeoutId1);
-    let el = document.getElementById("income-header");
-    el.innerText = incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2);
+    incomeHeader.innerText = incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2);
 }, false);
 
-document.getElementById("income-header").addEventListener('mouseleave', function(event) {
+incomeHeader.addEventListener('mouseleave', function(event) {
     timeoutId1 = setTimeout(function() {
-        let el = document.getElementById("income-header");
-        el.innerText = "Income";
+        incomeHeader.innerText = "Income";
     }, 2000);
 }, false);
 
-document.getElementById("income-header").addEventListener('click', function(event) {
+incomeHeader.addEventListener('click', function(event) {
     clearTimeout(timeoutId1);
+    incomeHeader.innerText = incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2);
+    setTimeout(function() {
+        incomeHeader.innerText = "Income";
+    }, 5000);
 }, false);
 
-document.getElementById("expense-header").addEventListener('mouseenter', function(event) {
+expenseHeader.addEventListener('mouseenter', function(event) {
     clearTimeout(timeoutId2);
-    let el = document.getElementById("expense-header");
-    el.innerText = expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
+    expenseHeader.innerText = expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
 }, false);
 
-document.getElementById("expense-header").addEventListener('mouseleave', function(event) {
+expenseHeader.addEventListener('mouseleave', function(event) {
     timeoutId2 = setTimeout(function() {
-        let el = document.getElementById("expense-header");
-        el.innerText = "Expenses";
+        expenseHeader.innerText = "Expenses";
     }, 2000);
 }, false);
 
-document.getElementById("expense-header").addEventListener('click', function(event) {
-    clearTimeout(timeoutId1);
+expenseHeader.addEventListener('click', function(event) {
+    clearTimeout(timeoutId2);
+    expenseHeader.innerText = expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
+    setTimeout(function() {
+        expenseHeader.innerText = "Expenses";
+    }, 5000);
 }, false);
+
+
 
 document.getElementById("balance").addEventListener("click", function(event) {
     showAllIncome();
