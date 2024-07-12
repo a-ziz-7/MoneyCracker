@@ -19,7 +19,7 @@ let typeColors = {
     'fun': '#00b3ff',
     'shopping': '#ff9900', //
     'groceries': '#00ff15', // 
-    'other': '#2a2a2a', // 
+    // 'other': '#2a2a2a', // 
 };
 
 
@@ -388,12 +388,12 @@ expenseHeader.addEventListener('click', function(event) {
 
 
 
-document.getElementById("balance").addEventListener("click", function(event) {
-    showAllIncome();
-    showAllExpenses(); 
-    showActualSizesIncomes();
-    showActualSizesExpenses();
-}, false)
+// document.getElementById("balance").addEventListener("click", function(event) {
+//     showAllIncome();
+//     showAllExpenses(); 
+//     showActualSizesIncomes();
+//     showActualSizesExpenses();
+// }, false)
 
 
 function showAllIncome() {
@@ -444,7 +444,7 @@ function handleOPIncome() {
 let typeIncome = 'other';
 let incomeTypes = ['salary', 'gift', 'business', 'interest', 'custom', 'other'];
 let typeExpense = 'other';
-let expenseTypes = ['food', 'transport', 'fun', 'shopping', 'custom', 'other'];
+let expenseTypes = ['food', 'fun', 'shopping', 'groceries', 'transport', 'other'];
 document.querySelectorAll('.selectable-option').forEach(function(option) {
     option.addEventListener('click', function() {
         if (incomeTypes.includes(this.getAttribute('data-value'))) {
