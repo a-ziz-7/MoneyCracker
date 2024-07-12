@@ -277,7 +277,7 @@ function showContextMenu(event, item) {
     event.preventDefault();
     const contextMenu = document.getElementById('context-menu');
     contextMenu.style.display = 'block';
-    contextMenu.style.left = `${event.pageX}px`;
+    contextMenu.style.left = `${event.pageX+5}px`;
     contextMenu.style.top = `${event.pageY-50}px`;
     contextMenuItem = item;
 }
@@ -298,8 +298,6 @@ function handleContextAction(action) {
         const newDesc = prompt('Enter new description:', item.desc);
         if (!newDesc) return;
         const newAmount = prompt('Enter new amount:', item.amount);
-        // const newType = prompt(`Enter new type: (${incomeTypes.join(', ')})`, item.type);
-        // newType = incomeTypes.includes(newType) ? newType : 'other';
         if ((newDesc && !isNaN(newAmount)) || newAmount==null) {
             if (type === 'income') {
                 let newType = prompt(`Enter new type: (${incomeTypes.join(', ')})`, item.type);
@@ -402,6 +400,7 @@ function showAllIncome() {
     incomes.forEach(income => {
         income.hide = false;
     });
+    alert("All Incomes are shown\nTotal Income: $" + incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2));
     update();
     saveData();
 }
@@ -410,6 +409,7 @@ function showAllExpenses() {
     expenses.forEach(expense => {
         expense.hide = false;
     });
+    alert("All Expenses are shown\nTotal Expense: $" + expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2));
     update();
     saveData();
 }
@@ -460,10 +460,241 @@ document.querySelectorAll('.selectable-option').forEach(function(option) {
 
 document.getElementById('overlay').addEventListener('click', function() {
     document.getElementById('popup').style.display = 'none';
+    document.getElementById('popup2').style.display = 'none';
+    document.getElementById('sorts').style.display = 'none';
     document.getElementById('overlay').style.display = 'none';
 });
 
-document.getElementById('overlay').addEventListener('click', function() {
-    document.getElementById('popup2').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
+
+document.addEventListener('DOMContentLoaded', () => {
+    const exMenu = document.getElementById('ex-menu');
+    const incomeMenu = document.getElementById('income-menu');
+
+    const dropdownExMenu = exMenu.querySelector('.dropdown-content');
+    const dropdownIncomeMenu = incomeMenu.querySelector('.dropdown-content');
+
+    // Function to hide all menus except the specified one
+    function hideAllMenus(exceptMenu) {
+        if (exceptMenu !== 'exMenu') {
+            dropdownExMenu.style.display = 'none';
+        }
+        if (exceptMenu !== 'incomeMenu') {
+            dropdownIncomeMenu.style.display = 'none';
+        }
+    }
+
+    exMenu.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent click from propagating to document
+        hideAllMenus('exMenu');
+        dropdownExMenu.style.display = dropdownExMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    incomeMenu.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent click from propagating to document
+        hideAllMenus('incomeMenu');
+        dropdownIncomeMenu.style.display = dropdownIncomeMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close all menus if clicking outside of any menu
+    document.addEventListener('click', () => {
+        dropdownExMenu.style.display = 'none';
+        dropdownIncomeMenu.style.display = 'none';
+    });
+});
+
+
+
+
+function incomeTypesInfo() {
+    const incomeTypesD = {};
+
+    // Initialize the incomeTypes object with keys from the incomeTypesArray
+    incomeTypes.forEach(type => {
+        incomeTypesD[type] = 0;
+    });
+
+    // Calculate total amounts for each income type
+    incomes.forEach(income => {
+        if (incomeTypesD.hasOwnProperty(income.type)) {
+            incomeTypesD[income.type] += income.amount;
+        } else {
+            incomeTypesD[income.type] = income.amount; // For any new income types not in the array
+        }
+    });
+
+    // Build a formatted string to display
+    let message = 'Income Types Information:\n\n';
+    for (const [type, amount] of Object.entries(incomeTypesD)) {
+        message += `${type}: $${amount.toFixed(2)}\n`;
+    }
+
+    // Display the formatted message
+    alert(message);
+}
+
+function expenseTypesInfo() {
+    const expenseTypesD = {};
+
+    // Initialize the expenseTypes object with keys from the expenseTypesArray
+    expenseTypes.forEach(type => {
+        expenseTypesD[type] = 0;
+    });
+
+    // Calculate total amounts for each expense type
+    expenses.forEach(expense => {
+        if (expenseTypesD.hasOwnProperty(expense.type)) {
+            expenseTypesD[expense.type] += expense.amount;
+        } else {
+            expenseTypesD[expense.type] = expense.amount; // For any new expense types not in the array
+        }
+    });
+
+    // Build a formatted string to display
+    let message = 'Expense Types Information:\n\n';
+    for (const [type, amount] of Object.entries(expenseTypesD)) {
+        message += `${type}: $${amount.toFixed(2)}\n`;
+    }
+
+    // Display the formatted message
+    alert(message);
+}
+
+
+function o3() {
+    let e = document.getElementById("sorts");
+    document.getElementById('overlay').style.display = 'block';
+    e.style.display = "block";
+}
+
+function updateIncomeListt(incomes) {
+    const incomeList = document.getElementById('income-list');
+    incomeList.innerHTML = '';
+    incomes.forEach(income => {
+        if (!income.hide) {
+            const item = document.createElement('div');
+            item.classList.add('list-item');
+            item.dataset.id = income.id;
+            item.dataset.type = 'income';
+            if (income.resize === 0) {
+                const height = setHeight(income.amount);
+                if (height > 35) {
+                    item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
+                } else {
+                    if (income.desc.length < 10 && height > 20) {
+                        item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
+                    } else {
+                        item.innerHTML = `<span>$${income.amount.toFixed(2)}</span>`;
+                    }
+                }
+                item.style.height = height + 'px';
+                if (height < 15) {
+                    item.style.fontSize = item.style.height;
+                }
+            } else if (income.resize === 1) {
+                item.style.height = sizings[1] + 'px';
+                item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
+            } else if (income.resize === 2) {
+                item.style.height = sizings[2] + 'px';
+                item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
+            }
+            item.style.setProperty('--triangle-color', typeColors[income.type]);
+            item.addEventListener('contextmenu', function(event) {
+                showContextMenu(event, item);
+            });
+            if (add[0]) {
+                incomeList.prepend(item);
+            } else {
+                incomeList.append(item);
+            }
+        }
+    });
+    updateBalance();
+}
+
+function updateExpenseListt(expenses) {
+    const expenseList = document.getElementById('expense-list');
+    expenseList.innerHTML = '';
+    expenses.forEach(expense => {
+        if (!expense.hide) {
+            const item = document.createElement('div');
+            item.classList.add('list-item');
+            item.dataset.id = expense.id;
+            item.dataset.type = 'expense';
+            if (expense.resize === 0) {
+                const height = setHeight(expense.amount);
+                if (height > 35) {
+                    item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
+                } else {
+                    if (expense.desc.length < 10 && height > 20) {
+                        item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
+                    } else {
+                        item.innerHTML = `<span>$${expense.amount.toFixed(2)}</span>`;
+                    }
+                }
+                item.style.height = height + 'px';
+                if (height < 15) {
+                    item.style.fontSize = item.style.height;
+                }
+            }
+            else if (expense.resize === 1) {
+                item.style.height = sizings[1] + 'px';
+                item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
+            } else if (expense.resize === 2) {
+                item.style.height = sizings[2] + 'px';
+                item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
+            }
+            item.style.setProperty('--triangle-color', typeColors[expense.type]);
+            item.addEventListener('contextmenu', function(event) {
+                showContextMenu(event, item);
+            });
+            if (add[0]) {
+                expenseList.prepend(item);
+            } else {
+                expenseList.append(item);
+            }
+        }
+    }
+    );
+    updateBalance();
+}
+
+function sortByAmount(array) {
+    return [...array].sort((a, b) => b.amount - a.amount);
+}
+
+function sortByAmountDescending(array) {
+    return [...array].sort((a, b) => a.amount - b.amount);
+}
+
+function orderSort(selectedSort) {
+    if (selectedSort === 'sort_3') {
+        const sortedIncomes = sortByAmount(incomes);
+        const sortedExpenses = sortByAmount(expenses);
+        updateIncomeListt(sortedIncomes);
+        updateExpenseListt(sortedExpenses);
+    } else if (selectedSort === 'sort_4') {
+        const sortedIncomes = sortByAmountDescending(incomes);
+        const sortedExpenses = sortByAmountDescending(expenses);
+        updateIncomeListt(sortedIncomes);
+        updateExpenseListt(sortedExpenses);
+    } else if (selectedSort === 'sort_1') {
+        handleOrder(true);
+    } else if (selectedSort === 'sort_2') {
+        handleOrder(false);
+        add=[true];
+    }
+    // saveData();
+    // update();
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const sortElements = document.querySelectorAll('.s');
+
+    sortElements.forEach(element => {
+        element.addEventListener('click', (event) => {
+            const selectedSort = event.target.id;
+            document.getElementById('sorts').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            orderSort(selectedSort);
+        });
+    });
 });

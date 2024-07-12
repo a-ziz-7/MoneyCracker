@@ -104,7 +104,6 @@ input, button {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    
 }
 
 .half_buttons {
@@ -363,4 +362,129 @@ button:hover {
 
 #resize_down {
     background-color: #ff00cc;
+}
+
+
+.menu {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    /* color: #ff4d00 */
+    /* padding: 10px 20px; */
+    padding-top: 5px;
+    /* border: 1px solid #ff4d00; */
+}
+
+.d {
+    width: 75px;
+    height: 35px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 140px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    padding: 10px;
+    border: 1px solid #ff4d00;
+}
+
+.dropdown-content button,
+.submenu .dropdown-content button {
+    font-size: 12px;
+    width: calc(100%); /* Full width with padding */
+    color: #ffffff;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #333;
+    border-radius: 5px;
+    border: 1px solid #00ffcc;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.dropdown-content button:hover,
+.submenu .dropdown-content button:hover {
+    background-color: #555;
+}
+
+.dropdown-content button:hover,
+.submenu .sub-dropdown-content button:hover {
+    background-color: #555;
+}
+
+.menu:hover .dropdown-content {
+    display: block;
+}
+
+.submenu {
+    position: relative;
+}
+
+.sub-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 10px;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    padding: 10px;
+    border: 1px solid #ff4d00;
+}
+
+.submenu:hover .sub-dropdown-content {
+    display: block;
+}
+
+
+
+.popup_sort {
+    display: none;
+    position: fixed;
+    width: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ff4d00;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+}
+
+.so {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.s {
+    
+    width: calc(50% - 20px); /* Two items per row with spacing */
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #333;
+    border-radius: 5px;
+    border: 1px solid #00ffcc;
+    cursor: pointer;
+    box-sizing: border-box;
+    /* color: #121212; */
+    text-align: center;
+    margin: 10px;
+}
+
+#ex-menu .dropdown-content button {
+    /* Add your styles here */
+    border: 1px solid #ff00cc; /* Example border */
+}
+
+.popup, .popup_sort, .dropdown-content{
+    border-radius: 5px;
 }

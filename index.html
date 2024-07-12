@@ -10,9 +10,21 @@
 <body>
     <div class="header-container">
         <h2 id="income-header">Income</h2>
-        <div class="menu" id="in-menu">menu</div>
+        <div class="menu" id="in-menu"><img class="d" src="d.png" alt="logo">
+            <div class="dropdown-content">
+                <button onclick="showAllIncome()">Show All Income</button>
+                <button onclick="incomeTypesInfo()">Viev Income Types</button>
+                <button onclick="o3()">Sort</button>
+            </div>
+        </div>
         <div class="balance" id="balance">$0.00</div>
-        <div class="menu" id="ex-menu">menu</div>
+        <div class="menu" id="ex-menu"><img class="d" src="d.png" alt="logo">
+            <div class="dropdown-content">
+                <button onclick="showAllExpenses()">Show All Expenses</button>
+                <button onclick="expenseTypesInfo()">Viev Expense Types</button>
+                <button onclick="o3()">Sort</button>
+            </div>
+        </div>
         <h2 id="expense-header">Expenses</h2>
     </div>
     <div class="container">
@@ -65,6 +77,14 @@
             <div class="selectable-option" id="expense_4" data-value="shopping">Shopping</div>
             <div class="selectable-option" id="expense_5" data-value="transport">Transport</div>
             <div class="selectable-option" id="expense_6" data-value="other">Other</div>
+        </div>
+    </div>
+    <div class="popup_sort" id="sorts">
+        <div class="so">
+            <div class="s" id="sort_1">Newest-Oldest</div>
+            <div class="s" id="sort_3">Amount Ascending</div>
+            <div class="s" id="sort_2">Oldest-Newest</div>
+            <div class="s" id="sort_4">Amount Descending</div>
         </div>
     </div>
     <script src="script.js"></script>
