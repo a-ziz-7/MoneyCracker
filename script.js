@@ -468,7 +468,7 @@ document.getElementById('overlay').addEventListener('click', function() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const exMenu = document.getElementById('ex-menu');
-    const incomeMenu = document.getElementById('income-menu');
+    const incomeMenu = document.getElementById('in-menu');
 
     const dropdownExMenu = exMenu.querySelector('.dropdown-content');
     const dropdownIncomeMenu = incomeMenu.querySelector('.dropdown-content');
