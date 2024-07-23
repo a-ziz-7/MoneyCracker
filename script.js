@@ -6,7 +6,7 @@ let contextMenuItem = null;
 let resize = [0];
 let add = [true];
 let custom = [];
-localStorage.setItem('custom', JSON.stringify(["Custom", "Custom 1", "Custom 2", "Custom 3"]));
+// localStorage.setItem('custom', JSON.stringify(["Custom", "Custom 1", "Custom 2", "Custom 3"]));
 
 
 let sizings = {0:'0', 1:'40', 2:'182.35'};
@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('expense_11').innerText = custom[1];
     document.getElementById('expense_22').innerText = custom[2];
     document.getElementById('expense_33').innerText = custom[3];
+    tcoac();
 });
 
 document.addEventListener('contextmenu', function(event) {
@@ -347,11 +348,12 @@ function updateBalance() {
     const totalIncome = incomes.reduce((sum, income) => sum + income.amount, 0);
     const totalExpense = expenses.reduce((sum, expense) => sum + expense.amount, 0);
     const balance = totalIncome - totalExpense;
-    document.getElementById('balance').innerText = `$${balance.toFixed(2)}`;
     if (balance <= 0) {
+        document.getElementById('balance').innerText = `$${Math.abs(balance).toFixed(2)}`;
         document.getElementById('balance').style.color =  "#ff000d";
         document.getElementById('balance').style.borderColor =  "#ff000d";
     }else{
+        document.getElementById('balance').innerText = `$${balance.toFixed(2)}`;
         document.getElementById('balance').style.color =  "#00ff33";
         document.getElementById('balance').style.borderColor =  "#00ff33";
     }
@@ -459,6 +461,43 @@ document.querySelectorAll('.selectable-option').forEach(function(option) {
         } else {
             typeExpense = this.getAttribute('data-value');
         }
+        if (this.getAttribute('data-value') === 'custom' && this.innerText === 'Custom') {
+            let customType = prompt('Enter custom income type:');
+            if (customType) {
+                custom[0] = customType;
+                localStorage.setItem('custom', JSON.stringify(custom));
+                document.getElementById('income_5').innerText = customType;
+            }
+        }
+
+        if (this.getAttribute('data-value') === 'custom 1' && this.innerText === 'Custom 1') {
+            let customType = prompt('Enter custom income type:');
+            if (customType) {
+                custom[1] = customType;
+                localStorage.setItem('custom', JSON.stringify(custom));
+                document.getElementById('expense_11').innerText = customType;
+            }
+        }
+
+        if (this.getAttribute('data-value') === 'custom 2' && this.innerText === 'Custom 2') {
+            let customType = prompt('Enter custom income type:');
+            if (customType) {
+                custom[2] = customType;
+                localStorage.setItem('custom', JSON.stringify(custom));
+                document.getElementById('expense_22').innerText = customType;
+            }
+        }
+
+        if (this.getAttribute('data-value') === 'custom 3' && this.innerText === 'Custom 3') {
+            let customType = prompt('Enter custom income type:');
+            if (customType) {
+                custom[3] = customType;
+                localStorage.setItem('custom', JSON.stringify(custom));
+                document.getElementById('expense_33').innerText = customType;
+            }
+        }
+
+
         document.getElementById('popup').style.display = 'none';
         document.getElementById('popup2').style.display = 'none';
         document.getElementById('overlay').style.display = 'none';
@@ -472,6 +511,8 @@ document.getElementById('overlay').addEventListener('click', function() {
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('di').style.display = 'none';
     document.getElementById('de').style.display = 'none';
+    document.getElementById('ci').style.display = 'none';
+    document.getElementById('ce').style.display = 'none';
 });
 
 
@@ -512,8 +553,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
-
 function incomeTypesInfo() {
     const incomeTypesD = {};
 
@@ -533,8 +572,12 @@ function incomeTypesInfo() {
 
     // Build a formatted string to display
     let message = 'Income Types Information:\n\n';
+    console.log(incomeTypesD);
     for (const [type, amount] of Object.entries(incomeTypesD)) {
-        message += `${type}: $${amount.toFixed(2)}\n`;
+        let x = type.includes('custom') ? custom[0] : "";
+        let xx = (x.includes('Custom') ? "" : ` (${x})`);
+        let xxx = xx == " ()" ? "" : xx;
+        message += `${type}${xxx}: $${amount.toFixed(2)}\n`;
     }
 
     // Display the formatted message
@@ -559,12 +602,13 @@ function expenseTypesInfo() {
     });
 
     // Build a formatted string to display
-    let message = 'Expense Types Information:\n\n';
+    let message = 'Expense Types Information:\n';
     for (const [type, amount] of Object.entries(expenseTypesD)) {
-        message += `${type}: $${amount.toFixed(2)}\n`;
+        let x = type.includes('custom') ? custom[type[7]] : "";
+        let xx = (x.includes('Custom') ? "" : ` (${x})`);
+        let xxx = xx == " ()" ? "" : xx;
+        message += `${type}${xxx}: $${amount.toFixed(2)}\n`;
     }
-
-    // Display the formatted message
     alert(message);
 }
 
@@ -731,6 +775,7 @@ function orderSort(selectedSort) {
     // saveData();
     // update();
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     const sortElements = document.querySelectorAll('.s');
 
@@ -775,3 +820,38 @@ function delE(x) {
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('de').style.display = 'none';
 }  
+
+function o6() {
+    let e = document.getElementById("ci");
+    document.getElementById('overlay').style.display = 'block';
+    e.style.display = "block";
+}
+
+function o7() {
+    let e = document.getElementById("ce");
+    document.getElementById('overlay').style.display = 'block';
+    e.style.display = "block";
+}
+
+function tcoac() {
+    document.getElementById('income_5').innerText = custom[0];
+    document.getElementById('expense_11').innerText = custom[1];
+    document.getElementById('expense_22').innerText = custom[2];
+    document.getElementById('expense_33').innerText = custom[3];
+    document.getElementById('cite').innerText = custom[0];
+    document.getElementById('cete1').innerText = custom[1];
+    document.getElementById('cete2').innerText = custom[2];
+    document.getElementById('cete3').innerText = custom[3];
+    localStorage.setItem('custom', JSON.stringify(custom));
+}
+
+function hc() {
+    custom[0] = document.getElementById('cite').value;
+    custom[1] = document.getElementById('cete1').value;
+    custom[2] = document.getElementById('cete2').value;
+    custom[3] = document.getElementById('cete3').value;
+    tcoac();
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('ci').style.display = 'none';
+    document.getElementById('ce').style.display = 'none';
+}

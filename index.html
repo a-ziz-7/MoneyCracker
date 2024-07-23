@@ -15,6 +15,7 @@
                 <button onclick="showAllIncome()">Show All Income</button>
                 <button onclick="showActualSizesIncomes()">Show True Sizes</button>
                 <button onclick="incomeTypesInfo()">Viev Income Types</button>
+                <button onclick="o6()">Custom Options</button>      
                 <button onclick="o3()">Sort</button>
                 <button onclick="o4()">Delete All</button>
             </div>
@@ -25,8 +26,10 @@
                 <button onclick="showAllExpenses()">Show All Expenses</button>
                 <button onclick="showActualSizesExpenses()">Show True Sizes</button>
                 <button onclick="expenseTypesInfo()">Viev Expense Types</button>
+                <button onclick="o7()">Custom Options</button>      
                 <button onclick="o3()">Sort</button>
                 <button onclick="o5()">Delete All</button>
+                 
             </div>
         </div>
         <h2 id="expense-header">Expenses</h2>
@@ -109,6 +112,21 @@
             <div class="del" id="del_22" onclick="delE(true)">Yes</div>
             <div class="del" id="del_33" onclick="delE(false)">No</div>
         </div>
+    </div>
+
+    <div class="custom" id="ci">
+        <div class="cp" id="cdc">Custom</div>
+        <textarea class="tea" id="cite"></textarea>
+        <button id="cisb" onclick="hc()">Submit</button>
+    </div>
+    <div class="custom" id="ce">
+        <div class="cp">Custom 1</div>
+        <textarea class="tea" id="cete1"></textarea>
+        <div class="cp">Custom 2</div>
+        <textarea class="tea" id="cete2"></textarea>
+        <div class="cp">Custom 3</div>
+        <textarea class="tea" id="cete3"></textarea>
+        <button id="cesb" onclick="hc()">Submit</button>
     </div>
     <script src="script.js"></script>
 </body>
