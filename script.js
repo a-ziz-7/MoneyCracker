@@ -5,6 +5,9 @@ let expenses = [];
 let contextMenuItem = null;
 let resize = [0];
 let add = [true];
+let custom = [];
+localStorage.setItem('custom', JSON.stringify(["Custom", "Custom 1", "Custom 2", "Custom 3"]));
+
 
 let sizings = {0:'0', 1:'40', 2:'182.35'};
 let typeColors = {
@@ -19,7 +22,9 @@ let typeColors = {
     'fun': '#00b3ff',
     'shopping': '#ff9900', //
     'groceries': '#00ff15', // 
-    // 'other': '#2a2a2a', // 
+    'custom 1': '#ff3535',
+    'custom 2': '#b3aab1',
+    'custom 3': '#b4eeb4',
 };
 
 
@@ -41,13 +46,13 @@ function ensureAllProperties(array) {
     return array;
 }
 
-
-
 // localStorage.clear();
 document.addEventListener('DOMContentLoaded', function() {
     // Load income and expenses from localStorage
     const storedIncomes = localStorage.getItem('incomes');
     const storedExpenses = localStorage.getItem('expenses');
+    const storedCustom = localStorage.getItem('custom');
+    // alert(storedCustom)
     // Parse stored data if available
     if (storedIncomes) {
         incomes = JSON.parse(storedIncomes);
@@ -59,10 +64,19 @@ document.addEventListener('DOMContentLoaded', function() {
         expenses = ensureAllProperties(expenses);
         updateExpenseList();
     }
+    custom = JSON.parse(storedCustom);
+    console.log(custom);
     console.log(incomes);
     console.log(expenses);
 });
 
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('income_5').innerText = custom[0];
+    document.getElementById('expense_11').innerText = custom[1];
+    document.getElementById('expense_22').innerText = custom[2];
+    document.getElementById('expense_33').innerText = custom[3];
+});
 
 document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
@@ -165,10 +179,11 @@ function updateIncomeList() {
             item.classList.add('list-item');
             item.dataset.id = income.id;
             item.dataset.type = 'income';
+            const time_info = income.time.substring(0, 5);
             if (income.resize == 0) {
                 const height = setHeight(income.amount);
                 if (height > 35) {
-                    item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
+                    item.innerHTML = `<span>${income.desc}\t${time_info}</span>$${income.amount.toFixed(2)}</span>`;
                 } else {
                     if (income.desc.length < 10 && height > 20) {
                         item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
@@ -212,12 +227,12 @@ function updateExpenseList() {
             item.classList.add('list-item');
             item.dataset.id = expense.id;
             item.dataset.type = 'expense';
-
+            time_info = expense.time.substring(0, 5);
             if (expense.resize == 0) {
                 const height = setHeight(expense.amount);
 
             if (height > 35) {
-                item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
+                item.innerHTML = `<span>${expense.desc}\t${time_info}</span>$${expense.amount.toFixed(2)}</span>`;
             } else {
                 if (expense.desc.length < 10 && height > 20) {
                     item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
@@ -387,15 +402,6 @@ expenseHeader.addEventListener('click', function(event) {
 }, false);
 
 
-
-// document.getElementById("balance").addEventListener("click", function(event) {
-//     showAllIncome();
-//     showAllExpenses(); 
-//     showActualSizesIncomes();
-//     showActualSizesExpenses();
-// }, false)
-
-
 function showAllIncome() {
     incomes.forEach(income => {
         income.hide = false;
@@ -444,7 +450,8 @@ function handleOPIncome() {
 let typeIncome = 'other';
 let incomeTypes = ['salary', 'gift', 'business', 'interest', 'custom', 'other'];
 let typeExpense = 'other';
-let expenseTypes = ['food', 'fun', 'shopping', 'groceries', 'transport', 'other'];
+let expenseTypes = ['food', 'fun', 'shopping', 'groceries', 'transport', 'custom 1', 'custom 2', 'custom 3', 'other'];
+
 document.querySelectorAll('.selectable-option').forEach(function(option) {
     option.addEventListener('click', function() {
         if (incomeTypes.includes(this.getAttribute('data-value'))) {
@@ -463,6 +470,8 @@ document.getElementById('overlay').addEventListener('click', function() {
     document.getElementById('popup2').style.display = 'none';
     document.getElementById('sorts').style.display = 'none';
     document.getElementById('overlay').style.display = 'none';
+    document.getElementById('di').style.display = 'none';
+    document.getElementById('de').style.display = 'none';
 });
 
 
@@ -575,16 +584,17 @@ function updateIncomeListt(incomes) {
             item.classList.add('list-item');
             item.dataset.id = income.id;
             item.dataset.type = 'income';
+            time_info = income.time.substring(0, 5);
             if (income.resize === 0) {
                 const height = setHeight(income.amount);
                 if (height > 35) {
-                    item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
+                    item.innerHTML = `<span>${income.desc}\t${time_info}</span>$${income.amount.toFixed(2)}</span>`;
                 } else {
                     if (income.desc.length < 10 && height > 20) {
                         item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
                     } else {
                         item.innerHTML = `<span>$${income.amount.toFixed(2)}</span>`;
-                    }
+                    }  
                 }
                 item.style.height = height + 'px';
                 if (height < 15) {
@@ -620,10 +630,11 @@ function updateExpenseListt(expenses) {
             item.classList.add('list-item');
             item.dataset.id = expense.id;
             item.dataset.type = 'expense';
+            time_info = expense.time.substring(0, 5);
             if (expense.resize === 0) {
                 const height = setHeight(expense.amount);
                 if (height > 35) {
-                    item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
+                    item.innerHTML = `<span>${expense.desc}\t${time_info}</span>$${expense.amount.toFixed(2)}</span>`;
                 } else {
                     if (expense.desc.length < 10 && height > 20) {
                         item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
@@ -666,6 +677,28 @@ function sortByAmountDescending(array) {
     return [...array].sort((a, b) => a.amount - b.amount);
 }
 
+function sortOrderTypeMain(ari, are) {
+    let incomeTypes = ['salary', 'gift', 'business', 'interest', 'custom', 'other'];
+    let expenseTypes = ['food', 'fun', 'shopping', 'groceries', 'transport', 'custom 1', 'custom 2', 'custom 3', 'other'];
+    let retIncomes = [];
+    let retExpenses = [];
+    incomeTypes.forEach(item => {
+        ari.forEach(income => {
+            if (income.type === item) {
+                retIncomes.push(income);
+            }
+        });
+    });
+    expenseTypes.forEach(item => {
+        are.forEach(expense => {
+            if (expense.type === item) {
+                retExpenses.push(expense);
+            }
+        });
+    });
+    return [retIncomes, retExpenses];
+}
+
 function orderSort(selectedSort) {
     if (selectedSort === 'sort_3') {
         const sortedIncomes = sortByAmount(incomes);
@@ -682,6 +715,18 @@ function orderSort(selectedSort) {
     } else if (selectedSort === 'sort_2') {
         handleOrder(false);
         add=[true];
+    } else if (selectedSort === 'sort_6') {
+        const om = sortOrderTypeMain(incomes, expenses);
+        const sortedIncomes = om[0];
+        const sortedExpenses = om[1];
+        updateIncomeListt(sortedIncomes);
+        updateExpenseListt(sortedExpenses);
+    } else if (selectedSort === 'sort_5') {
+        const om = sortOrderTypeMain(incomes, expenses);
+        const sortedIncomes = om[0].reverse();
+        const sortedExpenses = om[1].reverse();
+        updateIncomeListt(sortedIncomes);
+        updateExpenseListt(sortedExpenses);
     }
     // saveData();
     // update();
@@ -698,3 +743,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+function o4() {
+    let e = document.getElementById("di");
+    document.getElementById('overlay').style.display = 'block';
+    e.style.display = "block";
+}
+
+function o5() {
+    let e = document.getElementById("de");
+    document.getElementById('overlay').style.display = 'block';
+    e.style.display = "block";
+}
+
+function delI(x) {
+    if (x) {
+        incomes = [];
+        update();
+        saveData();
+    }
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('di').style.display = 'none';
+}
+
+function delE(x) {
+    if (x) {
+        expenses = [];
+        update();
+        saveData();
+    }
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('de').style.display = 'none';
+}  

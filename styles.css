@@ -325,9 +325,9 @@ button:hover {
     border: 1px solid #ff00cc;
 }
 
-#income_1, #income_2, #income_3, #income_4, #income_5, #expense_1, #expense_2, #expense_3, #expense_4, #expense_5 {
+/* #income_1, #income_2, #income_3, #income_4, #income_5, #expense_1, #expense_2, #expense_3, #expense_4, #expense_5 {
     background-color: #333;
-}
+} */
 
  #income_1, #expense_2 {
     background-color: #00b3ff;
@@ -347,6 +347,18 @@ button:hover {
 
 #income_5, #expense_4 {
     background-color: #ff9900;
+}
+
+#expense_11 {
+    background-color: #ff3535;
+}
+
+#expense_22 {
+    background-color: #b3aab1;
+}
+
+#expense_33 {
+    background-color: #b4eeb4;
 }
 
 @media (max-width: 768px) {
@@ -457,6 +469,26 @@ button:hover {
     z-index: 1000;
 }
 
+.delete_all, .delete_al{
+    display: none;
+    position: fixed;
+    width: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ff4d00;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    .popup_sort, .delete_all, .delete_al {
+        width: 70%;
+    }
+}
+
 .so {
     margin: 10px 0;
     display: flex;
@@ -464,8 +496,15 @@ button:hover {
     justify-content: space-between;
 }
 
+.del_inc, .del_exp {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
 .s {
-    
     width: calc(50% - 20px); /* Two items per row with spacing */
     color: rgb(255, 255, 255);
     padding: 10px;
@@ -478,6 +517,36 @@ button:hover {
     /* color: #121212; */
     text-align: center;
     margin: 10px;
+}
+
+#confirm_text {
+    justify-content: center ;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.del {
+    width: calc(50% - 20px); /* Two items per row with spacing */
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #333;
+    border-radius: 5px;
+    border: 1px solid #00ffcc;
+    cursor: pointer;
+    box-sizing: border-box;
+    /* color: #121212; */
+    text-align: center;
+    margin: 10px;
+}
+
+
+#del_3 {
+    border: 1px solid #ff00cc;
+ }
+
+#del_22 {
+    border: 1px solid #ff00cc;
 }
 
 #ex-menu .dropdown-content button {

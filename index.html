@@ -16,6 +16,7 @@
                 <button onclick="showActualSizesIncomes()">Show True Sizes</button>
                 <button onclick="incomeTypesInfo()">Viev Income Types</button>
                 <button onclick="o3()">Sort</button>
+                <button onclick="o4()">Delete All</button>
             </div>
         </div>
         <div class="balance" id="balance">$0.00</div>
@@ -25,6 +26,7 @@
                 <button onclick="showActualSizesExpenses()">Show True Sizes</button>
                 <button onclick="expenseTypesInfo()">Viev Expense Types</button>
                 <button onclick="o3()">Sort</button>
+                <button onclick="o5()">Delete All</button>
             </div>
         </div>
         <h2 id="expense-header">Expenses</h2>
@@ -78,15 +80,34 @@
             <div class="selectable-option" id="expense_3" data-value="groceries">Groceries</div>
             <div class="selectable-option" id="expense_4" data-value="shopping">Shopping</div>
             <div class="selectable-option" id="expense_5" data-value="transport">Transport</div>
+            <div class="selectable-option" id="expense_11" data-value="custom 1">Custom 1</div>
+            <div class="selectable-option" id="expense_22" data-value="custom 2">Custom 2</div>
+            <div class="selectable-option" id="expense_33" data-value="custom 3">Custom 3</div>
             <div class="selectable-option" id="expense_6" data-value="other">Other</div>
         </div>
     </div>
     <div class="popup_sort" id="sorts">
         <div class="so">
             <div class="s" id="sort_1">Newest-Oldest</div>
-            <div class="s" id="sort_3">Amount Ascending</div>
             <div class="s" id="sort_2">Oldest-Newest</div>
+            <div class="s" id="sort_3">Amount Ascending</div>
             <div class="s" id="sort_4">Amount Descending</div>
+            <div class="s" id="sort_5">Type Main</div>
+            <div class="s" id="sort_6">Type Other</div>
+        </div>
+    </div>
+    <div class="delete_all" id="di">
+        <div class="del_inc" id="del_1">
+            <div id="confirm_text">Are you sure you want to delete all incomes?</div>
+            <div class="del" id="del_2" onclick="delI(true)">Yes</div>
+            <div class="del" id="del_3" onclick="delI(false)">No</div>
+        </div>
+    </div>
+    <div class="delete_al" id="de">
+        <div class="del_exp" id="del_11">
+            <div id="confirm_text">Are you sure you want to delete all expenses?</div>
+            <div class="del" id="del_22" onclick="delE(true)">Yes</div>
+            <div class="del" id="del_33" onclick="delE(false)">No</div>
         </div>
     </div>
     <script src="script.js"></script>
