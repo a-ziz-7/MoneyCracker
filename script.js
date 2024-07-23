@@ -376,13 +376,13 @@ incomeHeader.addEventListener('mouseleave', function(event) {
     }, 2000);
 }, false);
 
-incomeHeader.addEventListener('click', function(event) {
-    clearTimeout(timeoutId1);
-    incomeHeader.innerText = incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2);
-    setTimeout(function() {
-        incomeHeader.innerText = "Income";
-    }, 5000);
-}, false);
+// incomeHeader.addEventListener('click', function(event) {
+//     clearTimeout(timeoutId1);
+//     incomeHeader.innerText = incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2);
+//     setTimeout(function() {
+//         incomeHeader.innerText = "Income";
+//     }, 5000);
+// }, false);
 
 expenseHeader.addEventListener('mouseenter', function(event) {
     clearTimeout(timeoutId2);
@@ -395,13 +395,13 @@ expenseHeader.addEventListener('mouseleave', function(event) {
     }, 2000);
 }, false);
 
-expenseHeader.addEventListener('click', function(event) {
-    clearTimeout(timeoutId2);
-    expenseHeader.innerText = expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
-    setTimeout(function() {
-        expenseHeader.innerText = "Expenses";
-    }, 5000);
-}, false);
+// expenseHeader.addEventListener('click', function(event) {
+//     clearTimeout(timeoutId2);
+//     expenseHeader.innerText = expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
+//     setTimeout(function() {
+//         expenseHeader.innerText = "Expenses";
+//     }, 5000);
+// }, false);
 
 
 function showAllIncome() {
