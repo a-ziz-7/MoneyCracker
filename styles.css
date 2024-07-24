@@ -390,6 +390,7 @@ button:hover {
 .d {
     width: 75px;
     height: 35px;
+    z-index: 1;
 }
 
 .dropdown-content {
@@ -592,10 +593,11 @@ button:hover {
 
 .tea {
     /* color: black; */
-    width: 80%;
+    width: 78%;
     height: 1.1em;
     font-size: 1.4em;
     margin-bottom: 10px;
+    resize: none;
 }
 
 
@@ -617,4 +619,110 @@ button:hover {
     margin: 5px 0;
     box-sizing: border-box;
     border-radius: 5px;
+}
+
+#tpi {
+    display: none;
+    color: #00ffcc;
+    position: fixed;
+    width: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ff4d00;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+}
+
+#tpe {
+    display: none;
+    color: #ff00cc;
+    position: fixed;
+    width: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ff4d00;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+}
+
+#i {
+    display: none;
+    /* color: #00ffcc; */
+    position: fixed;
+    width: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ff4d00;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+}
+
+/* .menu:hover {
+    background-color: #555;
+} */
+
+.h {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 100%;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    z-index: 0;
+}
+
+.menu:hover .h {
+    background-color: rgba(85, 85, 85, 0.3);
+}
+
+/* #ec {
+    display: none;
+    position: fixed;
+    width: 20%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ff4d00;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+} */
+
+.edir {
+    display: none;
+    position: fixed;
+    /* width: 30%; */
+    width: calc(auto - 50px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ff4d00;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+}
+
+.te {
+    width: 78%;
+    height: 1.1em;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    resize: none;
+}
+
+#b {
+    width: 80%;
 }

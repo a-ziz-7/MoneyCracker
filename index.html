@@ -11,6 +11,7 @@
     <div class="header-container">
         <h2 id="income-header">Income</h2>
         <div class="menu" id="in-menu"><img class="d" src="d.png" alt="logo">
+            <div class="h"></div>
             <div class="dropdown-content">
                 <button onclick="showAllIncome()">Show All Income</button>
                 <button onclick="showActualSizesIncomes()">Show True Sizes</button>
@@ -22,11 +23,12 @@
         </div>
         <div class="balance" id="balance">$0.00</div>
         <div class="menu" id="ex-menu"><img class="d" src="d.png" alt="logo">
+            <div class="h"></div>
             <div class="dropdown-content">
                 <button onclick="showAllExpenses()">Show All Expenses</button>
                 <button onclick="showActualSizesExpenses()">Show True Sizes</button>
                 <button onclick="expenseTypesInfo()">Viev Expense Types</button>
-                <button onclick="o7()">Custom Options</button>      
+                <button onclick="o7(1)">Custom Options</button>      
                 <button onclick="o3()">Sort</button>
                 <button onclick="o5()">Delete All</button>
                  
@@ -101,7 +103,7 @@
     </div>
     <div class="delete_all" id="di">
         <div class="del_inc" id="del_1">
-            <div id="confirm_text">Are you sure you want to delete all incomes?</div>
+            <div id="confirm_text">Are you sure you want to delete all income?</div>
             <div class="del" id="del_2" onclick="delI(true)">Yes</div>
             <div class="del" id="del_3" onclick="delI(false)">No</div>
         </div>
@@ -127,6 +129,21 @@
         <div class="cp">Custom 3</div>
         <textarea class="tea" id="cete3"></textarea>
         <button id="cesb" onclick="hc()">Submit</button>
+    </div>
+    <div id="i"></div>
+    <div id="tpi"></div>
+    <div id="tpe"></div>
+    <div class='custom', id="ec">
+        <div class="ecd" id="cusotm_title"></div>
+        <textarea class="tea" id="tea"></textarea>
+        <button id="bb" onclick="ctp()">Submit</button>
+    </div>
+    <div class="edir" id="edir">
+        <div class="e">Description:</div>
+        <textarea class="te" id="ed"></textarea>
+        <div class="e">Amount</div>
+        <textarea class="te" id="ea"></textarea>
+        <button id="b" onclick="lastlast()">Submit</button>
     </div>
     <script src="script.js"></script>
 </body>

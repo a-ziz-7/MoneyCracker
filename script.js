@@ -65,17 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
         updateExpenseList();
     }
     custom = JSON.parse(storedCustom);
-    console.log(custom);
-    console.log(incomes);
-    console.log(expenses);
+    // console.log(custom);
+    // console.log(incomes);
+    // console.log(expenses);
 });
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('income_5').innerText = custom[0];
-    document.getElementById('expense_11').innerText = custom[1];
-    document.getElementById('expense_22').innerText = custom[2];
-    document.getElementById('expense_33').innerText = custom[3];
     tcoac();
 });
 
@@ -184,7 +180,8 @@ function updateIncomeList() {
             if (income.resize == 0) {
                 const height = setHeight(income.amount);
                 if (height > 35) {
-                    item.innerHTML = `<span>${income.desc}\t${time_info}</span>$${income.amount.toFixed(2)}</span>`;
+                    // item.innerHTML = `<span>${income.desc}\t${time_info}</span>$${income.amount.toFixed(2)}</span>`;
+                    item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
                 } else {
                     if (income.desc.length < 10 && height > 20) {
                         item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
@@ -233,7 +230,8 @@ function updateExpenseList() {
                 const height = setHeight(expense.amount);
 
             if (height > 35) {
-                item.innerHTML = `<span>${expense.desc}\t${time_info}</span>$${expense.amount.toFixed(2)}</span>`;
+                // item.innerHTML = `<span>${expense.desc}\t${time_info}</span>$${expense.amount.toFixed(2)}</span>`;
+                item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
             } else {
                 if (expense.desc.length < 10 && height > 20) {
                     item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
@@ -298,7 +296,50 @@ function showContextMenu(event, item) {
     contextMenuItem = item;
 }
 
-function handleContextAction(action) {
+function waitForClick() {
+    return new Promise((resolve) => {
+        document.addEventListener('click', function onClick(event) {
+            document.removeEventListener('click', onClick);
+            resolve(event);
+        });
+    });
+}
+
+async function lastlast() {
+    // document.getElementById('overlay').style.display = 'none';
+    const newDesc = document.getElementById('ed').value;
+    const newAmount = document.getElementById('ea').value;
+    document.getElementById('edir').style.display = 'none';
+    if ((newDesc && !isNaN(newAmount)) || newAmount==null) {
+        if (tt === 'income') {
+            const oldType = beg.type;
+            handleOPIncome();   
+            await waitForClick();
+            await waitForClick();
+            let newType = typeIncome !== 'other' ? typeIncome : oldType;
+            beg.desc = newDesc;
+            beg.amount = newAmount ? parseFloat(newAmount) : beg.amount;
+            beg.type = newType
+        } else {
+            const oldType = beg.type;
+            handleOPExpense();  
+            await waitForClick();
+            await waitForClick(); 
+            let newType = typeExpense !== 'other' ? typeExpense : oldType;
+            beg.desc = newDesc;
+            beg.amount = newAmount ? parseFloat(newAmount) : beg.amount;
+            beg.type = newType;
+        }
+    }
+    typeIncome = 'other';
+    typeExpense = 'other';
+    tcoac();
+    update();
+    saveData();
+}
+let tt;
+let beg;
+async function handleContextAction(action) {
     const id = parseInt(contextMenuItem.dataset.id);
     const type = contextMenuItem.dataset.type;
     const item = type === 'income' ? incomes.find(income => income.id === id) : expenses.find(expense => expense.id === id);
@@ -309,28 +350,17 @@ function handleContextAction(action) {
             expenses = expenses.filter(expense => expense.id !== id);
         }
     } else if (action === 'info') {
-        alert(`INFO:\nTime: ${item.time}\nDescription: ${item.desc}\nAmount: $${item.amount.toFixed(2)}\nType: ${item.type}`);
+        console.log(`INFO:\nTime: ${item.time}\nDescription: ${item.desc}\nAmount: $${item.amount.toFixed(2)}\nType: ${item.type}`);
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('i').innerText = `Info:\nTime: ${item.time}\nDescription: ${item.desc}\nAmount: $${item.amount.toFixed(2)}\nType: ${item.type}`;
+        document.getElementById('i').style.display = 'block';
     } else if (action === 'edit') {
-        const newDesc = prompt('Enter new description:', item.desc);
-        if (!newDesc) return;
-        const newAmount = prompt('Enter new amount:', item.amount);
-        if ((newDesc && !isNaN(newAmount)) || newAmount==null) {
-            if (type === 'income') {
-                let newType = prompt(`Enter new type: (${incomeTypes.join(', ')})`, item.type);
-                newType = incomeTypes.includes(newType) ? newType : 'other';
-                const income = incomes.find(income => income.id === id);
-                income.desc = newDesc;
-                income.amount = newAmount ? parseFloat(newAmount) : income.amount;
-                income.type = newType
-            } else if (type === 'expense') {
-                let newType = prompt(`Enter new type: (${expenseTypes.join(', ')})`, item.type);
-                newType = expenseTypes.includes(newType) ? newType : 'other';
-                const expense = expenses.find(expense => expense.id === id);
-                expense.desc = newDesc;
-                expense.amount = newAmount ? parseFloat(newAmount) : expense.amount;
-                expense.type = newType;
-            }
-        }
+        document.getElementById('ed').value = item.desc;
+        document.getElementById('ea').value = item.amount;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('edir').style.display = 'block';
+        beg = item;
+        tt = type;
     } else if (action === 'hide') {
         item.hide = true;
     } else if (action === 'resizesmall') {
@@ -408,7 +438,12 @@ function showAllIncome() {
     incomes.forEach(income => {
         income.hide = false;
     });
-    alert("All Incomes are shown\nTotal Income: $" + incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2));
+    console.log("All Income are shown\nTotal Income: $" + incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2));
+    clearTimeout(timeoutId1);
+    incomeHeader.innerText = incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2);
+    setTimeout(function() {
+        incomeHeader.innerText = "Income";
+    }, 5000);
     update();
     saveData();
 }
@@ -417,7 +452,12 @@ function showAllExpenses() {
     expenses.forEach(expense => {
         expense.hide = false;
     });
-    alert("All Expenses are shown\nTotal Expense: $" + expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2));
+    console.log("All Expenses are shown\nTotal Expense: $" + expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2));
+    clearTimeout(timeoutId2);
+    expenseHeader.innerText = expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
+    setTimeout(function() {
+        expenseHeader.innerText = "Expenses";
+    }, 5000);
     update();
     saveData();
 }
@@ -462,47 +502,24 @@ document.querySelectorAll('.selectable-option').forEach(function(option) {
             typeExpense = this.getAttribute('data-value');
         }
         if (this.getAttribute('data-value') === 'custom' && this.innerText === 'Custom') {
-            let customType = prompt('Enter custom income type:');
-            if (customType) {
-                custom[0] = customType;
-                localStorage.setItem('custom', JSON.stringify(custom));
-                document.getElementById('income_5').innerText = customType;
-            }
+            o6();
         }
-
-        if (this.getAttribute('data-value') === 'custom 1' && this.innerText === 'Custom 1') {
-            let customType = prompt('Enter custom income type:');
-            if (customType) {
-                custom[1] = customType;
-                localStorage.setItem('custom', JSON.stringify(custom));
-                document.getElementById('expense_11').innerText = customType;
-            }
+        else if (this.getAttribute('data-value').includes("custom ") && this.innerText.includes("Custom")) {
+            o7(this.getAttribute('data-value')[7]);
+        } else {
+            document.getElementById('overlay').style.display = 'none';
         }
-
-        if (this.getAttribute('data-value') === 'custom 2' && this.innerText === 'Custom 2') {
-            let customType = prompt('Enter custom income type:');
-            if (customType) {
-                custom[2] = customType;
-                localStorage.setItem('custom', JSON.stringify(custom));
-                document.getElementById('expense_22').innerText = customType;
-            }
-        }
-
-        if (this.getAttribute('data-value') === 'custom 3' && this.innerText === 'Custom 3') {
-            let customType = prompt('Enter custom income type:');
-            if (customType) {
-                custom[3] = customType;
-                localStorage.setItem('custom', JSON.stringify(custom));
-                document.getElementById('expense_33').innerText = customType;
-            }
-        }
-
+        tcoac();
 
         document.getElementById('popup').style.display = 'none';
         document.getElementById('popup2').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
     });
 });
+
+function ctp(index) {
+
+    custom[index] = someType;
+}
 
 document.getElementById('overlay').addEventListener('click', function() {
     document.getElementById('popup').style.display = 'none';
@@ -513,6 +530,12 @@ document.getElementById('overlay').addEventListener('click', function() {
     document.getElementById('de').style.display = 'none';
     document.getElementById('ci').style.display = 'none';
     document.getElementById('ce').style.display = 'none';
+    document.getElementById('tpi').style.display = 'none';
+    document.getElementById('tpe').style.display = 'none';
+    document.getElementById('i').style.display = 'none';
+    document.getElementById('ec').style.display = 'none';
+    document.getElementById('edir').style.display = 'none';
+    tcoac();
 });
 
 
@@ -572,18 +595,52 @@ function incomeTypesInfo() {
 
     // Build a formatted string to display
     let message = 'Income Types Information:\n\n';
-    console.log(incomeTypesD);
+    // console.log(incomeTypesD);
     for (const [type, amount] of Object.entries(incomeTypesD)) {
         let x = type.includes('custom') ? custom[0] : "";
         let xx = (x.includes('Custom') ? "" : ` (${x})`);
         let xxx = xx == " ()" ? "" : xx;
         message += `${type}${xxx}: $${amount.toFixed(2)}\n`;
     }
+    console.log(message);
 
-    // Display the formatted message
-    alert(message);
+    let container = document.createElement('div');
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    // container.style.margin = '20px';
+
+    for (const [type, amount] of Object.entries(incomeTypesD)) {
+        let x = type.includes('custom') ? custom[0] : "";
+        let xx = (x.includes('Custom') ? "" : ` (${x})`);
+        let xxx = xx == " ()" ? "" : xx;
+
+        let typeDiv = document.createElement('div');
+        typeDiv.textContent = `${type}${xxx}:`;
+        typeDiv.style.flex = '1';
+        typeDiv.style.color = type!=='other'? typeColors[type]: "white";
+
+        let amountDiv = document.createElement('div');
+        amountDiv.textContent = `$${amount.toFixed(2)}`;
+        amountDiv.style.flex = '1';
+
+        let itemDiv = document.createElement('div');
+        itemDiv.style.display = 'flex';
+        itemDiv.style.justifyContent = 'space-between';
+        itemDiv.style.margin = '10px';
+
+
+        itemDiv.appendChild(typeDiv);
+        itemDiv.appendChild(amountDiv);
+
+        container.appendChild(itemDiv);
+    }
+
+    let vv = document.getElementById('tpi');
+    vv.innerHTML = container.innerHTML;
+    vv.style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
 }
-
+// let x = type.includes('custom') ? custom[type[7]] : "";
 function expenseTypesInfo() {
     const expenseTypesD = {};
 
@@ -602,14 +659,49 @@ function expenseTypesInfo() {
     });
 
     // Build a formatted string to display
-    let message = 'Expense Types Information:\n';
+    let message = 'Expense Types Information:\n\n';
     for (const [type, amount] of Object.entries(expenseTypesD)) {
         let x = type.includes('custom') ? custom[type[7]] : "";
         let xx = (x.includes('Custom') ? "" : ` (${x})`);
         let xxx = xx == " ()" ? "" : xx;
         message += `${type}${xxx}: $${amount.toFixed(2)}\n`;
     }
-    alert(message);
+    console.log(message);
+
+    let container = document.createElement('div');
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.margin = '20px';
+
+    for (const [type, amount] of Object.entries(expenseTypesD)) {
+        let x = type.includes('custom') ? custom[type[7]] : "";
+        let xx = (x.includes('Custom') ? "" : ` (${x})`);
+        let xxx = xx == " ()" ? "" : xx;
+
+        let typeDiv = document.createElement('div');
+        typeDiv.textContent = `${type}${xxx}:`;
+        typeDiv.style.flex = '1';
+        typeDiv.style.color = type !== 'other' ? typeColors[type] : "white";
+
+        let amountDiv = document.createElement('div');
+        amountDiv.textContent = `$${amount.toFixed(2)}`;
+        amountDiv.style.flex = '1';
+
+        let itemDiv = document.createElement('div');
+        itemDiv.style.display = 'flex';
+        itemDiv.style.justifyContent = 'space-between';
+        itemDiv.style.margin = '10px';
+
+        itemDiv.appendChild(typeDiv);
+        itemDiv.appendChild(amountDiv);
+
+        container.appendChild(itemDiv);
+    }
+
+    let vv = document.getElementById('tpe');
+    vv.innerHTML = container.innerHTML;
+    vv.style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
 }
 
 
@@ -632,7 +724,7 @@ function updateIncomeListt(incomes) {
             if (income.resize === 0) {
                 const height = setHeight(income.amount);
                 if (height > 35) {
-                    item.innerHTML = `<span>${income.desc}\t${time_info}</span>$${income.amount.toFixed(2)}</span>`;
+                    item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
                 } else {
                     if (income.desc.length < 10 && height > 20) {
                         item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
@@ -678,7 +770,7 @@ function updateExpenseListt(expenses) {
             if (expense.resize === 0) {
                 const height = setHeight(expense.amount);
                 if (height > 35) {
-                    item.innerHTML = `<span>${expense.desc}\t${time_info}</span>$${expense.amount.toFixed(2)}</span>`;
+                    item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
                 } else {
                     if (expense.desc.length < 10 && height > 20) {
                         item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
@@ -825,12 +917,22 @@ function o6() {
     let e = document.getElementById("ci");
     document.getElementById('overlay').style.display = 'block';
     e.style.display = "block";
+    let ta = document.getElementById('cite');
+    ta.focus();
+    setTimeout(() => {
+        ta.select();
+    }, 10); 
 }
 
-function o7() {
+function o7(x) {
     let e = document.getElementById("ce");
     document.getElementById('overlay').style.display = 'block';
     e.style.display = "block";
+    let ta = document.getElementById('cete'+x);
+    ta.focus();
+    setTimeout(() => {
+        ta.select();
+    }, 10); 
 }
 
 function tcoac() {
@@ -855,3 +957,16 @@ function hc() {
     document.getElementById('ci').style.display = 'none';
     document.getElementById('ce').style.display = 'none';
 }
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function o() {
+    while (true) {
+        console.log(document.getElementById('cite'));
+        await sleep(1000);
+    }
+}
+
+// o();
