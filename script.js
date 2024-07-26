@@ -46,8 +46,15 @@ function ensureAllProperties(array) {
     return array;
 }
 
+function ensureCustom(array) {
+    if (array === null) {
+        array = ["Custom", "Custom 1", "Custom 2", "Custom 3"];
+    } 
+    return array;
+}
+
 // localStorage.clear();
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {x
     // Load income and expenses from localStorage
     const storedIncomes = localStorage.getItem('incomes');
     const storedExpenses = localStorage.getItem('expenses');
@@ -65,7 +72,8 @@ document.addEventListener('DOMContentLoaded', function() {
         updateExpenseList();
     }
     custom = JSON.parse(storedCustom);
-    // console.log(custom);
+    custom = ensureCustom(custom);
+    console.log(custom);
     // console.log(incomes);
     // console.log(expenses);
 });
