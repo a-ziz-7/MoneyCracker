@@ -54,7 +54,7 @@ function ensureCustom(array) {
 }
 
 // localStorage.clear();
-document.addEventListener('DOMContentLoaded', function() {x
+document.addEventListener('DOMContentLoaded', function() {
     // Load income and expenses from localStorage
     const storedIncomes = localStorage.getItem('incomes');
     const storedExpenses = localStorage.getItem('expenses');
@@ -73,14 +73,10 @@ document.addEventListener('DOMContentLoaded', function() {x
     }
     custom = JSON.parse(storedCustom);
     custom = ensureCustom(custom);
-    console.log(custom);
+    tcoac();
+    // console.log(custom);
     // console.log(incomes);
     // console.log(expenses);
-});
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    tcoac();
 });
 
 document.addEventListener('contextmenu', function(event) {
@@ -976,5 +972,3 @@ async function o() {
         await sleep(1000);
     }
 }
-
-// o();
