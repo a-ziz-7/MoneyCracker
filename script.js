@@ -9,7 +9,7 @@ let custom = [];
 // localStorage.setItem('custom', JSON.stringify(["Custom", "Custom 1", "Custom 2", "Custom 3"]));
 
 
-let sizings = {0:'0', 1:'40', 2:'182.35'};
+let sizings = {0:'0', 1:'40', 2:'210'};
 let typeColors = {
     'salary': '#00b3ff',
     'gift': '#00ff15',
@@ -49,8 +49,26 @@ function ensureAllProperties(array) {
 function ensureCustom(array) {
     if (array === null) {
         array = ["Custom", "Custom 1", "Custom 2", "Custom 3"];
-    } 
+        console.log('New custom array created');
+    } else {
+        if (array.length < 4) {
+            array = ["Custom", "Custom 1", "Custom 2", "Custom 3"];
+            console.log('Custom array reset');
+        }
+    }
     return array;
+}
+
+function tcoac() {
+    document.getElementById('income_5').innerText = custom[0];
+    document.getElementById('expense_11').innerText = custom[1];
+    document.getElementById('expense_22').innerText = custom[2];
+    document.getElementById('expense_33').innerText = custom[3];
+    document.getElementById('cite').innerText = custom[0];
+    document.getElementById('cete1').innerText = custom[1];
+    document.getElementById('cete2').innerText = custom[2];
+    document.getElementById('cete3').innerText = custom[3];
+    localStorage.setItem('custom', JSON.stringify(custom));
 }
 
 // localStorage.clear();
@@ -59,8 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const storedIncomes = localStorage.getItem('incomes');
     const storedExpenses = localStorage.getItem('expenses');
     const storedCustom = localStorage.getItem('custom');
-    // alert(storedCustom)
-    // Parse stored data if available
+
     if (storedIncomes) {
         incomes = JSON.parse(storedIncomes);
         incomes = ensureAllProperties(incomes);
@@ -73,10 +90,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     custom = JSON.parse(storedCustom);
     custom = ensureCustom(custom);
-    // tcoac();
     console.log(custom);
-    // console.log(incomes);
-    // console.log(expenses);
+    console.log(incomes);
+    console.log(expenses);
 });
 
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -941,18 +957,6 @@ function o7(x) {
     setTimeout(() => {
         ta.select();
     }, 10); 
-}
-
-function tcoac() {
-    document.getElementById('income_5').innerText = custom[0];
-    document.getElementById('expense_11').innerText = custom[1];
-    document.getElementById('expense_22').innerText = custom[2];
-    document.getElementById('expense_33').innerText = custom[3];
-    document.getElementById('cite').innerText = custom[0];
-    document.getElementById('cete1').innerText = custom[1];
-    document.getElementById('cete2').innerText = custom[2];
-    document.getElementById('cete3').innerText = custom[3];
-    localStorage.setItem('custom', JSON.stringify(custom));
 }
 
 function hc() {
