@@ -73,10 +73,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     custom = JSON.parse(storedCustom);
     custom = ensureCustom(custom);
-    tcoac();
-    // console.log(custom);
+    // tcoac();
+    console.log(custom);
     // console.log(incomes);
     // console.log(expenses);
+});
+
+document.addEventListener('DOMContentLoaded', function(event) {
+    tcoac();
 });
 
 document.addEventListener('contextmenu', function(event) {
