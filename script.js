@@ -49,11 +49,11 @@ function ensureAllProperties(array) {
 function ensureCustom(array) {
     if (array === null) {
         array = ["Custom", "Custom 1", "Custom 2", "Custom 3"];
-        console.log('New custom array created');
+        // console.log('New custom array created');
     } else {
         if (array.length < 4) {
             array = ["Custom", "Custom 1", "Custom 2", "Custom 3"];
-            console.log('Custom array reset');
+            // console.log('Custom array reset');
         }
     }
     return array;
@@ -374,7 +374,7 @@ async function handleContextAction(action) {
             expenses = expenses.filter(expense => expense.id !== id);
         }
     } else if (action === 'info') {
-        console.log(`INFO:\nTime: ${item.time}\nDescription: ${item.desc}\nAmount: $${item.amount.toFixed(2)}\nType: ${item.type}`);
+        // console.log(`INFO:\nTime: ${item.time}\nDescription: ${item.desc}\nAmount: $${item.amount.toFixed(2)}\nType: ${item.type}`);
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('i').innerText = `Info:\nTime: ${item.time}\nDescription: ${item.desc}\nAmount: $${item.amount.toFixed(2)}\nType: ${item.type}`;
         document.getElementById('i').style.display = 'block';
@@ -462,7 +462,7 @@ function showAllIncome() {
     incomes.forEach(income => {
         income.hide = false;
     });
-    console.log("All Income are shown\nTotal Income: $" + incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2));
+    // console.log("All Income are shown\nTotal Income: $" + incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2));
     clearTimeout(timeoutId1);
     incomeHeader.innerText = incomes.reduce((sum, income) => sum + income.amount, 0).toFixed(2);
     setTimeout(function() {
@@ -476,7 +476,7 @@ function showAllExpenses() {
     expenses.forEach(expense => {
         expense.hide = false;
     });
-    console.log("All Expenses are shown\nTotal Expense: $" + expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2));
+    // console.log("All Expenses are shown\nTotal Expense: $" + expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2));
     clearTimeout(timeoutId2);
     expenseHeader.innerText = expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2);
     setTimeout(function() {
@@ -626,7 +626,7 @@ function incomeTypesInfo() {
         let xxx = xx == " ()" ? "" : xx;
         message += `${type}${xxx}: $${amount.toFixed(2)}\n`;
     }
-    console.log(message);
+    // console.log(message);
 
     let container = document.createElement('div');
     container.style.display = 'flex';
@@ -690,7 +690,7 @@ function expenseTypesInfo() {
         let xxx = xx == " ()" ? "" : xx;
         message += `${type}${xxx}: $${amount.toFixed(2)}\n`;
     }
-    console.log(message);
+    // console.log(message);
 
     let container = document.createElement('div');
     container.style.display = 'flex';
