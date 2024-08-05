@@ -294,9 +294,14 @@ function update() {
     updateExpenseList();
 }
 
+function updateSort() {
+    updateIncomeLists(incomes);
+    updateExpenseLists(expenses);
+}
+
 function handleOrder(state) {
     add[0] = state;
-    update()
+    updateSort()
 }
 
 // handleOrder(true);
@@ -541,7 +546,6 @@ document.querySelectorAll('.selectable-option').forEach(function(option) {
 });
 
 function ctp(index) {
-
     custom[index] = someType;
 }
 
@@ -781,6 +785,52 @@ function updateIncomeListt(incomes) {
     updateBalance();
 }
 
+function updateIncomeLists(incomes) {
+    const incomeList = document.getElementById('income-list');
+    incomeList.innerHTML = '';
+    incomes.forEach(income => {
+        if (!income.hide) {
+            const item = document.createElement('div');
+            item.classList.add('list-item');
+            item.dataset.id = income.id;
+            item.dataset.type = 'income';
+            time_info = income.time.substring(0, 5);
+            if (income.resize === 0) {
+                const height = setHeight(income.amount);
+                if (height > 35) {
+                    item.innerHTML = `<span>${income.desc} (${income.time.substring(0, income.time.length-8)})</span>$${income.amount.toFixed(2)}</span>`;
+                } else {
+                    if (income.desc.length < 10 && height > 20) {
+                        item.innerHTML = `<span>${income.desc}: $${income.amount.toFixed(2)}</span>`;
+                    } else {
+                        item.innerHTML = `<span>$${income.amount.toFixed(2)}</span>`;
+                    }  
+                }
+                item.style.height = height + 'px';
+                if (height < 15) {
+                    item.style.fontSize = item.style.height;
+                }
+            } else if (income.resize === 1) {
+                item.style.height = sizings[1] + 'px';
+                item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
+            } else if (income.resize === 2) {
+                item.style.height = sizings[2] + 'px';
+                item.innerHTML = `<span>${income.desc}</span>$${income.amount.toFixed(2)}</span>`;
+            }
+            item.style.setProperty('--triangle-color', typeColors[income.type]);
+            item.addEventListener('contextmenu', function(event) {
+                showContextMenu(event, item);
+            });
+            if (add[0]) {
+                incomeList.prepend(item);
+            } else {
+                incomeList.append(item);
+            }
+        }
+    });
+    updateBalance();
+}
+
 function updateExpenseListt(expenses) {
     const expenseList = document.getElementById('expense-list');
     expenseList.innerHTML = '';
@@ -795,6 +845,54 @@ function updateExpenseListt(expenses) {
                 const height = setHeight(expense.amount);
                 if (height > 35) {
                     item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
+                } else {
+                    if (expense.desc.length < 10 && height > 20) {
+                        item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
+                    } else {
+                        item.innerHTML = `<span>$${expense.amount.toFixed(2)}</span>`;
+                    }
+                }
+                item.style.height = height + 'px';
+                if (height < 15) {
+                    item.style.fontSize = item.style.height;
+                }
+            }
+            else if (expense.resize === 1) {
+                item.style.height = sizings[1] + 'px';
+                item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
+            } else if (expense.resize === 2) {
+                item.style.height = sizings[2] + 'px';
+                item.innerHTML = `<span>${expense.desc}</span>$${expense.amount.toFixed(2)}</span>`;
+            }
+            item.style.setProperty('--triangle-color', typeColors[expense.type]);
+            item.addEventListener('contextmenu', function(event) {
+                showContextMenu(event, item);
+            });
+            if (add[0]) {
+                expenseList.prepend(item);
+            } else {
+                expenseList.append(item);
+            }
+        }
+    }
+    );
+    updateBalance();
+}
+
+function updateExpenseLists(expenses) {
+    const expenseList = document.getElementById('expense-list');
+    expenseList.innerHTML = '';
+    expenses.forEach(expense => {
+        if (!expense.hide) {
+            const item = document.createElement('div');
+            item.classList.add('list-item');
+            item.dataset.id = expense.id;
+            item.dataset.type = 'expense';
+            time_info = expense.time.substring(0, 5);
+            if (expense.resize === 0) {
+                const height = setHeight(expense.amount);
+                if (height > 35) {
+                    item.innerHTML = `<span>${expense.desc} (${expense.time.substring(0, expense.time.length-8)})</span>$${expense.amount.toFixed(2)}</span>`;
                 } else {
                     if (expense.desc.length < 10 && height > 20) {
                         item.innerHTML = `<span>${expense.desc}: $${expense.amount.toFixed(2)}</span>`;
